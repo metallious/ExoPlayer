@@ -110,11 +110,16 @@ public class SuiteTvPlayer {
     }
 
     private void enableSurface() {
-        player.setVideoSurface(surface);
+        if (surface != null) {
+            player.setVideoSurface(surface);
+        }
     }
 
     public void setSurface(Surface surface) {
         this.surface = surface;
+        if (player.getPlaybackState() != Player.STATE_IDLE) {
+            enableSurface();
+        }
     }
 
     public void setSurface(SurfaceTexture texture) {
