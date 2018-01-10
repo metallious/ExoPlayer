@@ -5,6 +5,7 @@ import android.graphics.SurfaceTexture;
 import android.net.Uri;
 import android.opengl.GLES20;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
 
@@ -339,8 +340,8 @@ public class SuiteTvPlayer {
             }
         }
 
-        void onError(Error error);
-        void onInfo(Info info);
+        void onError(@NonNull Error error);
+        void onInfo(@NonNull Info info);
 
     }
 
