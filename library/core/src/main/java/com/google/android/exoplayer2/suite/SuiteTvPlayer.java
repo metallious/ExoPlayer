@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
 
+import com.google.android.exoplayer2.AgressiveLoadControl;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -31,6 +33,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.RingBufferDataSource;
+import com.google.android.exoplayer2.upstream.UdpDataSource;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -84,10 +87,10 @@ public class SuiteTvPlayer {
                 null, DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON);
         player = ExoPlayerFactory.newSimpleInstance(
                 renderersFactory, trackSelector
-                , new DefaultLoadControl(
+                , new AgressiveLoadControl(
                         new DefaultAllocator(
                                 true, 188, 340
-                        ), 5, 20000, 500, 50
+                        ), C.LENGTH_UNSET, 0
                 )
         );
         player.addListener(listener);
@@ -166,9 +169,9 @@ public class SuiteTvPlayer {
         return new DataSource.Factory() {
             @Override
             public DataSource createDataSource() {
-                return new RingBufferDataSource(
+                return new UdpDataSource(
                         BANDWIDTH_METER,
-                        65507,
+                        1500,
                         12000
                 );
             }

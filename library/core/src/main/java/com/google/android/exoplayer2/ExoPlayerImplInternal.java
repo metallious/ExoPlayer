@@ -606,7 +606,7 @@ import java.io.IOException;
           startRenderers();
         }
       }
-    } else if (state == Player.STATE_READY) {
+    } else if (!ExoPlayer.LIVE_STREAM && state == Player.STATE_READY) {
       boolean isStillReady = enabledRenderers.length > 0 ? allRenderersReadyOrEnded
           : isTimelineReady(playingPeriodDurationUs);
       if (!isStillReady) {

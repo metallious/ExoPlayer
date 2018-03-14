@@ -108,6 +108,7 @@ import com.google.android.exoplayer2.video.MediaCodecVideoRenderer;
  */
 public interface ExoPlayer extends Player {
 
+  boolean LIVE_STREAM = true;
   /**
    * @deprecated Use {@link Player.EventListener} instead.
    */
