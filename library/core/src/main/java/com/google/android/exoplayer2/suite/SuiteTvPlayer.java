@@ -120,9 +120,7 @@ public class SuiteTvPlayer {
 
     public void setSurface(Surface surface) {
         this.surface = surface;
-        if (player.getPlaybackState() != Player.STATE_IDLE) {
-            enableSurface();
-        }
+        enableSurface();
     }
 
     public void setSurface(SurfaceTexture texture) {
@@ -349,6 +347,7 @@ public class SuiteTvPlayer {
         }
 
         void onError(@NonNull Error error);
+
         void onInfo(@NonNull Info info);
 
     }
