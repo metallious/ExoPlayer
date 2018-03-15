@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.extractor.mkv;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.extractor.ExtractorInput;
+
 import java.io.EOFException;
 import java.io.IOException;
 
@@ -79,7 +80,7 @@ import java.io.IOException;
    * @throws InterruptedException If the thread is interrupted.
    */
   public long readUnsignedVarint(ExtractorInput input, boolean allowEndOfInput,
-      boolean removeLengthMask, int maximumAllowedLength) throws IOException, InterruptedException {
+                                 boolean removeLengthMask, int maximumAllowedLength) throws IOException, InterruptedException {
     if (state == STATE_BEGIN_READING) {
       // Read the first byte to establish the length.
       if (!input.readFully(scratch, 0, 1, allowEndOfInput)) {

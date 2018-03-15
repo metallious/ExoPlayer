@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
@@ -25,6 +26,7 @@ import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.NalUnitUtil;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.ParsableNalUnitBitArray;
+
 import java.util.Collections;
 
 /**
@@ -214,7 +216,7 @@ public final class H265Reader implements ElementaryStreamReader {
   }
 
   private static Format parseMediaFormat(String formatId, NalUnitTargetBuffer vps,
-      NalUnitTargetBuffer sps, NalUnitTargetBuffer pps) {
+                                         NalUnitTargetBuffer sps, NalUnitTargetBuffer pps) {
     // Build codec-specific data.
     byte[] csd = new byte[vps.nalLength + sps.nalLength + pps.nalLength];
     System.arraycopy(vps.nalData, 0, csd, 0, vps.nalLength);

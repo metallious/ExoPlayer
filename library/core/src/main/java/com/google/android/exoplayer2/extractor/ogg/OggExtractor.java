@@ -24,10 +24,11 @@ import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.extractor.PositionHolder;
 import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.io.IOException;
 
 /**
- * Ogg {@link Extractor}.
+ * Extracts data from the Ogg container format.
  */
 public class OggExtractor implements Extractor {
 

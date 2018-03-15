@@ -15,6 +15,8 @@
  */
 package com.google.android.exoplayer2.source.chunk;
 
+import com.google.android.exoplayer2.SeekParameters;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -22,6 +24,16 @@ import java.util.List;
  * A provider of {@link Chunk}s for a {@link ChunkSampleStream} to load.
  */
 public interface ChunkSource {
+
+  /**
+   * Adjusts a seek position given the specified {@link SeekParameters}. Chunk boundaries are used
+   * as sync points.
+   *
+   * @param positionUs The seek position in microseconds.
+   * @param seekParameters Parameters that control how the seek is performed.
+   * @return The adjusted seek position, in microseconds.
+   */
+  long getAdjustedSeekPositionUs(long positionUs, SeekParameters seekParameters);
 
   /**
    * If the source is currently having difficulty providing chunks, then this method throws the
@@ -64,7 +76,7 @@ public interface ChunkSource {
    * @param out A holder to populate.
    */
   void getNextChunk(MediaChunk previous, long playbackPositionUs, long loadPositionUs,
-      ChunkHolder out);
+                    ChunkHolder out);
 
   /**
    * Called when the {@link ChunkSampleStream} has finished loading a chunk obtained from this

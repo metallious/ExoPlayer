@@ -24,6 +24,7 @@ import android.media.MediaCodecInfo.CodecProfileLevel;
 import android.media.MediaCodecInfo.VideoCapabilities;
 import android.util.Log;
 import android.util.Pair;
+
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.MimeTypes;
@@ -91,7 +92,7 @@ public final class MediaCodecInfo {
    * @return The created instance.
    */
   public static MediaCodecInfo newInstance(String name, String mimeType,
-      CodecCapabilities capabilities) {
+                                           CodecCapabilities capabilities) {
     return new MediaCodecInfo(name, mimeType, capabilities, false, false);
   }
 
@@ -106,7 +107,7 @@ public final class MediaCodecInfo {
    * @return The created instance.
    */
   public static MediaCodecInfo newInstance(String name, String mimeType,
-      CodecCapabilities capabilities, boolean forceDisableAdaptive, boolean forceSecure) {
+                                           CodecCapabilities capabilities, boolean forceDisableAdaptive, boolean forceSecure) {
     return new MediaCodecInfo(name, mimeType, capabilities, forceDisableAdaptive, forceSecure);
   }
 

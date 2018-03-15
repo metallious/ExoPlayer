@@ -17,11 +17,10 @@ package com.google.android.exoplayer2.text.dvb;
 
 import com.google.android.exoplayer2.text.SimpleSubtitleDecoder;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.util.List;
 
-/**
- * A {@link SimpleSubtitleDecoder} for DVB Subtitles.
- */
+/** A {@link SimpleSubtitleDecoder} for DVB subtitles. */
 public final class DvbDecoder extends SimpleSubtitleDecoder {
 
   private final DvbParser parser;

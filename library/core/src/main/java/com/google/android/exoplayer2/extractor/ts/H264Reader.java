@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
@@ -26,6 +27,7 @@ import com.google.android.exoplayer2.util.NalUnitUtil;
 import com.google.android.exoplayer2.util.NalUnitUtil.SpsData;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.ParsableNalUnitBitArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -183,7 +185,7 @@ public final class H264Reader implements ElementaryStreamReader {
           output.format(Format.createVideoSampleFormat(formatId, MimeTypes.VIDEO_H264, null,
               Format.NO_VALUE, Format.NO_VALUE, spsData.width, spsData.height, Format.NO_VALUE,
               initializationData, Format.NO_VALUE, spsData.pixelWidthAspectRatio, null));
-          hasOutputFormat = true;
+          sampleReader.hasOutputFormat = hasOutputFormat = true;
           sampleReader.putSps(spsData);
           sampleReader.putPps(ppsData);
           sps.reset();
@@ -223,7 +225,7 @@ public final class H264Reader implements ElementaryStreamReader {
     private final TrackOutput output;
     private final boolean allowNonIdrKeyframes;
     private final boolean detectAccessUnits;
-    private final SparseArray<NalUnitUtil.SpsData> sps;
+    private final SparseArray<SpsData> sps;
     private final SparseArray<NalUnitUtil.PpsData> pps;
     private final ParsableNalUnitBitArray bitArray;
 
@@ -243,9 +245,10 @@ public final class H264Reader implements ElementaryStreamReader {
     private long samplePosition;
     private long sampleTimeUs;
     private boolean sampleIsKeyframe;
+    private boolean hasOutputFormat;
 
     public SampleReader(TrackOutput output, boolean allowNonIdrKeyframes,
-        boolean detectAccessUnits) {
+                        boolean detectAccessUnits) {
       this.output = output;
       this.allowNonIdrKeyframes = allowNonIdrKeyframes;
       this.detectAccessUnits = detectAccessUnits;
@@ -433,7 +436,8 @@ public final class H264Reader implements ElementaryStreamReader {
     }
 
     private void outputSample(int offset) {
-      @C.BufferFlags int flags = sampleIsKeyframe ? C.BUFFER_FLAG_KEY_FRAME : 0;
+//      @C.BufferFlags int flags = sampleIsKeyframe ? C.BUFFER_FLAG_KEY_FRAME : 0;
+      @C.BufferFlags int flags = (sampleIsKeyframe || allowNonIdrKeyframes && hasOutputFormat) ? C.BUFFER_FLAG_KEY_FRAME : 0;
       int size = (int) (nalUnitStartPosition - samplePosition);
       output.sampleMetadata(sampleTimeUs, flags, size, offset, null);
     }
@@ -472,9 +476,9 @@ public final class H264Reader implements ElementaryStreamReader {
       }
 
       public void setAll(SpsData spsData, int nalRefIdc, int sliceType, int frameNum,
-          int picParameterSetId, boolean fieldPicFlag, boolean bottomFieldFlagPresent,
-          boolean bottomFieldFlag, boolean idrPicFlag, int idrPicId, int picOrderCntLsb,
-          int deltaPicOrderCntBottom, int deltaPicOrderCnt0, int deltaPicOrderCnt1) {
+                         int picParameterSetId, boolean fieldPicFlag, boolean bottomFieldFlagPresent,
+                         boolean bottomFieldFlag, boolean idrPicFlag, int idrPicId, int picOrderCntLsb,
+                         int deltaPicOrderCntBottom, int deltaPicOrderCnt0, int deltaPicOrderCnt1) {
         this.spsData = spsData;
         this.nalRefIdc = nalRefIdc;
         this.sliceType = sliceType;

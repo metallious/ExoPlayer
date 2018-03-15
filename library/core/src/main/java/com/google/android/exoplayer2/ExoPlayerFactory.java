@@ -17,9 +17,11 @@ package com.google.android.exoplayer2;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+
 import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.util.Clock;
 
 /**
  * A factory for {@link ExoPlayer} instances.
@@ -38,7 +40,7 @@ public final class ExoPlayerFactory {
    */
   @Deprecated
   public static SimpleExoPlayer newSimpleInstance(Context context, TrackSelector trackSelector,
-      LoadControl loadControl) {
+                                                  LoadControl loadControl) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
     return newSimpleInstance(renderersFactory, trackSelector, loadControl);
   }
@@ -55,8 +57,8 @@ public final class ExoPlayerFactory {
    */
   @Deprecated
   public static SimpleExoPlayer newSimpleInstance(Context context, TrackSelector trackSelector,
-      LoadControl loadControl,
-      @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
+                                                  LoadControl loadControl,
+                                                  @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(context, drmSessionManager);
     return newSimpleInstance(renderersFactory, trackSelector, loadControl);
   }
@@ -76,8 +78,8 @@ public final class ExoPlayerFactory {
    */
   @Deprecated
   public static SimpleExoPlayer newSimpleInstance(Context context, TrackSelector trackSelector,
-      LoadControl loadControl, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager,
-      @DefaultRenderersFactory.ExtensionRendererMode int extensionRendererMode) {
+                                                  LoadControl loadControl, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager,
+                                                  @DefaultRenderersFactory.ExtensionRendererMode int extensionRendererMode) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(context, drmSessionManager,
         extensionRendererMode);
     return newSimpleInstance(renderersFactory, trackSelector, loadControl);
@@ -100,9 +102,9 @@ public final class ExoPlayerFactory {
    */
   @Deprecated
   public static SimpleExoPlayer newSimpleInstance(Context context, TrackSelector trackSelector,
-      LoadControl loadControl, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager,
-      @DefaultRenderersFactory.ExtensionRendererMode int extensionRendererMode,
-      long allowedVideoJoiningTimeMs) {
+                                                  LoadControl loadControl, @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager,
+                                                  @DefaultRenderersFactory.ExtensionRendererMode int extensionRendererMode,
+                                                  long allowedVideoJoiningTimeMs) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(context, drmSessionManager,
         extensionRendererMode, allowedVideoJoiningTimeMs);
     return newSimpleInstance(renderersFactory, trackSelector, loadControl);
@@ -125,7 +127,7 @@ public final class ExoPlayerFactory {
    * @param trackSelector The {@link TrackSelector} that will be used by the instance.
    */
   public static SimpleExoPlayer newSimpleInstance(RenderersFactory renderersFactory,
-      TrackSelector trackSelector) {
+                                                  TrackSelector trackSelector) {
     return newSimpleInstance(renderersFactory, trackSelector, new DefaultLoadControl());
   }
 
@@ -137,7 +139,7 @@ public final class ExoPlayerFactory {
    * @param loadControl The {@link LoadControl} that will be used by the instance.
    */
   public static SimpleExoPlayer newSimpleInstance(RenderersFactory renderersFactory,
-      TrackSelector trackSelector, LoadControl loadControl) {
+                                                  TrackSelector trackSelector, LoadControl loadControl) {
     return new SimpleExoPlayer(renderersFactory, trackSelector, loadControl);
   }
 
@@ -159,8 +161,8 @@ public final class ExoPlayerFactory {
    * @param loadControl The {@link LoadControl} that will be used by the instance.
    */
   public static ExoPlayer newInstance(Renderer[] renderers, TrackSelector trackSelector,
-      LoadControl loadControl) {
-    return new ExoPlayerImpl(renderers, trackSelector, loadControl);
+                                      LoadControl loadControl) {
+    return new ExoPlayerImpl(renderers, trackSelector, loadControl, Clock.DEFAULT);
   }
 
 }

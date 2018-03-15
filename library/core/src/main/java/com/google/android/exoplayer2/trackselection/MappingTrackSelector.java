@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.trackselection;
 import android.content.Context;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Player;
@@ -27,6 +28,7 @@ import com.google.android.exoplayer2.RendererConfiguration;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.util.Util;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,8 +123,8 @@ public abstract class MappingTrackSelector extends TrackSelector {
      * @param unassociatedTrackGroups Any {@link TrackGroup}s not mapped to any renderer.
      */
     /* package */ MappedTrackInfo(int[] rendererTrackTypes,
-        TrackGroupArray[] trackGroups, int[] mixedMimeTypeAdaptiveSupport,
-        int[][][] formatSupport, TrackGroupArray unassociatedTrackGroups) {
+                                  TrackGroupArray[] trackGroups, int[] mixedMimeTypeAdaptiveSupport,
+                                  int[][][] formatSupport, TrackGroupArray unassociatedTrackGroups) {
       this.rendererTrackTypes = rendererTrackTypes;
       this.trackGroups = trackGroups;
       this.formatSupport = formatSupport;
@@ -509,7 +511,7 @@ public abstract class MappingTrackSelector extends TrackSelector {
 
   @Override
   public final TrackSelectorResult selectTracks(RendererCapabilities[] rendererCapabilities,
-      TrackGroupArray trackGroups) throws ExoPlaybackException {
+                                                TrackGroupArray trackGroups) throws ExoPlaybackException {
     // Structures into which data will be written during the selection. The extra item at the end
     // of each array is to store data associated with track groups that cannot be associated with
     // any renderer.
@@ -625,7 +627,7 @@ public abstract class MappingTrackSelector extends TrackSelector {
    * @throws ExoPlaybackException If an error occurs while selecting the tracks.
    */
   protected abstract TrackSelection[] selectTracks(RendererCapabilities[] rendererCapabilities,
-      TrackGroupArray[] rendererTrackGroupArrays, int[][][] rendererFormatSupports)
+                                                   TrackGroupArray[] rendererTrackGroupArrays, int[][][] rendererFormatSupports)
       throws ExoPlaybackException;
 
   /**
@@ -725,9 +727,9 @@ public abstract class MappingTrackSelector extends TrackSelector {
    *     {@link C#AUDIO_SESSION_ID_UNSET} if tunneling should not be enabled.
    */
   private static void maybeConfigureRenderersForTunneling(
-      RendererCapabilities[] rendererCapabilities, TrackGroupArray[] rendererTrackGroupArrays,
-      int[][][] rendererFormatSupports, RendererConfiguration[] rendererConfigurations,
-      TrackSelection[] trackSelections, int tunnelingAudioSessionId) {
+          RendererCapabilities[] rendererCapabilities, TrackGroupArray[] rendererTrackGroupArrays,
+          int[][][] rendererFormatSupports, RendererConfiguration[] rendererConfigurations,
+          TrackSelection[] trackSelections, int tunnelingAudioSessionId) {
     if (tunnelingAudioSessionId == C.AUDIO_SESSION_ID_UNSET) {
       return;
     }
@@ -780,7 +782,7 @@ public abstract class MappingTrackSelector extends TrackSelector {
    * @return Whether the renderer supports tunneling for the {@link TrackSelection}.
    */
   private static boolean rendererSupportsTunneling(int[][] formatSupport,
-      TrackGroupArray trackGroups, TrackSelection selection) {
+                                                   TrackGroupArray trackGroups, TrackSelection selection) {
     if (selection == null) {
       return false;
     }

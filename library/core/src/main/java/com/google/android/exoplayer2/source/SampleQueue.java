@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.source;
 
 import android.support.annotation.Nullable;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.FormatHolder;
@@ -26,6 +27,7 @@ import com.google.android.exoplayer2.source.SampleMetadataQueue.SampleExtrasHold
 import com.google.android.exoplayer2.upstream.Allocation;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -182,6 +184,13 @@ public final class SampleQueue implements TrackOutput {
   }
 
   /**
+   * Returns the absolute index of the first sample.
+   */
+  public int getFirstIndex() {
+    return metadataQueue.getFirstIndex();
+  }
+
+  /**
    * Returns the current absolute read index.
    */
   public int getReadIndex() {
@@ -217,6 +226,11 @@ public final class SampleQueue implements TrackOutput {
    */
   public long getLargestQueuedTimestampUs() {
     return metadataQueue.getLargestQueuedTimestampUs();
+  }
+
+  /** Returns the timestamp of the first sample, or {@link Long#MIN_VALUE} if the queue is empty. */
+  public long getFirstTimestampUs() {
+    return metadataQueue.getFirstTimestampUs();
   }
 
   /**
@@ -282,6 +296,18 @@ public final class SampleQueue implements TrackOutput {
   }
 
   /**
+   * Attempts to set the read position to the specified sample index.
+   *
+   * @param sampleIndex The sample index.
+   * @return Whether the read position was set successfully. False is returned if the specified
+   *     index is smaller than the index of the first sample in the queue, or larger than the index
+   *     of the next sample that will be written.
+   */
+  public boolean setReadPosition(int sampleIndex) {
+    return metadataQueue.setReadPosition(sampleIndex);
+  }
+
+  /**
    * Attempts to read from the queue.
    *
    * @param formatHolder A {@link FormatHolder} to populate in the case of reading a format.
@@ -298,7 +324,7 @@ public final class SampleQueue implements TrackOutput {
    *     {@link C#RESULT_BUFFER_READ}.
    */
   public int read(FormatHolder formatHolder, DecoderInputBuffer buffer, boolean formatRequired,
-      boolean loadingFinished, long decodeOnlyUntilUs) {
+                  boolean loadingFinished, long decodeOnlyUntilUs) {
     int result = metadataQueue.read(formatHolder, buffer, formatRequired, loadingFinished,
         downstreamFormat, extrasHolder);
     switch (result) {
@@ -545,7 +571,7 @@ public final class SampleQueue implements TrackOutput {
 
   @Override
   public void sampleMetadata(long timeUs, @C.BufferFlags int flags, int size, int offset,
-      CryptoData cryptoData) {
+                             CryptoData cryptoData) {
     if (pendingFormatAdjustment) {
       format(lastUnadjustedFormat);
     }

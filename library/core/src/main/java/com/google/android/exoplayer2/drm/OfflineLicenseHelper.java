@@ -20,6 +20,7 @@ import android.os.ConditionVariable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Pair;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager.EventListener;
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager.Mode;
@@ -27,6 +28,7 @@ import com.google.android.exoplayer2.drm.DrmSession.DrmSessionException;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.upstream.HttpDataSource.Factory;
 import com.google.android.exoplayer2.util.Assertions;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -89,7 +91,7 @@ public final class OfflineLicenseHelper<T extends ExoMediaCrypto> {
    * @return A new instance which uses Widevine CDM.
    * @throws UnsupportedDrmException If the Widevine DRM scheme is unsupported or cannot be
    *     instantiated.
-   * @see DefaultDrmSessionManager#DefaultDrmSessionManager(java.util.UUID, ExoMediaDrm,
+   * @see DefaultDrmSessionManager#DefaultDrmSessionManager(UUID, ExoMediaDrm,
    *     MediaDrmCallback, HashMap, Handler, EventListener)
    */
   public static OfflineLicenseHelper<FrameworkMediaCrypto> newWidevineInstance(
@@ -110,7 +112,7 @@ public final class OfflineLicenseHelper<T extends ExoMediaCrypto> {
    * @param callback Performs key and provisioning requests.
    * @param optionalKeyRequestParameters An optional map of parameters to pass as the last argument
    *     to {@link MediaDrm#getKeyRequest(byte[], byte[], String, int, HashMap)}. May be null.
-   * @see DefaultDrmSessionManager#DefaultDrmSessionManager(java.util.UUID, ExoMediaDrm,
+   * @see DefaultDrmSessionManager#DefaultDrmSessionManager(UUID, ExoMediaDrm,
    *     MediaDrmCallback, HashMap, Handler, EventListener)
    */
   public OfflineLicenseHelper(UUID uuid, ExoMediaDrm<T> mediaDrm, MediaDrmCallback callback,

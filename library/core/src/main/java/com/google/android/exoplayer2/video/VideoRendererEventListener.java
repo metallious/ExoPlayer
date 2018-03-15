@@ -20,6 +20,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.view.Surface;
 import android.view.TextureView;
+
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.Renderer;
 import com.google.android.exoplayer2.decoder.DecoderCounters;
@@ -47,7 +48,7 @@ public interface VideoRendererEventListener {
    * @param initializationDurationMs The time taken to initialize the decoder in milliseconds.
    */
   void onVideoDecoderInitialized(String decoderName, long initializedTimestampMs,
-      long initializationDurationMs);
+                                 long initializationDurationMs);
 
   /**
    * Called when the format of the media being consumed by the renderer changes.
@@ -87,7 +88,7 @@ public interface VideoRendererEventListener {
    *     content.
    */
   void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees,
-      float pixelWidthHeightRatio);
+                          float pixelWidthHeightRatio);
 
   /**
    * Called when a frame is rendered for the first time since setting the surface, and when a frame
@@ -110,8 +111,10 @@ public interface VideoRendererEventListener {
    */
   final class EventDispatcher {
 
-    @Nullable private final Handler handler;
-    @Nullable private final VideoRendererEventListener listener;
+    @Nullable
+    private final Handler handler;
+    @Nullable
+    private final VideoRendererEventListener listener;
 
     /**
      * @param handler A handler for dispatching events, or null if creating a dummy instance.

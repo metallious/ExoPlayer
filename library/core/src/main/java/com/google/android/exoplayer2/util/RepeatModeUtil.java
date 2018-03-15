@@ -16,7 +16,9 @@
 package com.google.android.exoplayer2.util;
 
 import android.support.annotation.IntDef;
+
 import com.google.android.exoplayer2.Player;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -57,7 +59,7 @@ public final class RepeatModeUtil {
    * @return The next repeat mode.
    */
   public static @Player.RepeatMode int getNextRepeatMode(@Player.RepeatMode int currentMode,
-      int enabledModes) {
+                                                         int enabledModes) {
     for (int offset = 1; offset <= 2; offset++) {
       @Player.RepeatMode int proposedMode = (currentMode + offset) % 3;
       if (isRepeatModeEnabled(proposedMode, enabledModes)) {

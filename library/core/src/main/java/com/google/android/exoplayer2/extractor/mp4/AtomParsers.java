@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.extractor.mp4;
 
 import android.util.Log;
 import android.util.Pair;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.ParserException;
@@ -31,6 +32,7 @@ import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.AvcConfig;
 import com.google.android.exoplayer2.video.HevcConfig;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +67,7 @@ import java.util.List;
    * @return A {@link Track} instance, or {@code null} if the track's type isn't supported.
    */
   public static Track parseTrak(Atom.ContainerAtom trak, Atom.LeafAtom mvhd, long duration,
-      DrmInitData drmInitData, boolean ignoreEditLists, boolean isQuickTime)
+                                DrmInitData drmInitData, boolean ignoreEditLists, boolean isQuickTime)
       throws ParserException {
     Atom.ContainerAtom mdia = trak.getContainerAtomOfType(Atom.TYPE_mdia);
     int trackType = parseHdlr(mdia.getLeafAtomOfType(Atom.TYPE_hdlr).data);
@@ -113,7 +115,7 @@ import java.util.List;
    * @throws ParserException If the resulting sample sequence does not contain a sync sample.
    */
   public static TrackSampleTable parseStbl(Track track, Atom.ContainerAtom stblAtom,
-      GaplessInfoHolder gaplessInfoHolder) throws ParserException {
+                                           GaplessInfoHolder gaplessInfoHolder) throws ParserException {
     SampleSizeBox sampleSizeBox;
     Atom.LeafAtom stszAtom = stblAtom.getLeafAtomOfType(Atom.TYPE_stsz);
     if (stszAtom != null) {
@@ -604,7 +606,7 @@ import java.util.List;
    * @return An object containing the parsed data.
    */
   private static StsdData parseStsd(ParsableByteArray stsd, int trackId, int rotationDegrees,
-      String language, DrmInitData drmInitData, boolean isQuickTime) throws ParserException {
+                                    String language, DrmInitData drmInitData, boolean isQuickTime) throws ParserException {
     stsd.setPosition(Atom.FULL_HEADER_SIZE);
     int numberOfEntries = stsd.readInt();
     StsdData out = new StsdData(numberOfEntries);
@@ -644,7 +646,7 @@ import java.util.List;
   }
 
   private static void parseTextSampleEntry(ParsableByteArray parent, int atomType, int position,
-      int atomSize, int trackId, String language, StsdData out) throws ParserException {
+                                           int atomSize, int trackId, String language, StsdData out) throws ParserException {
     parent.setPosition(position + Atom.HEADER_SIZE + StsdData.STSD_HEADER_SIZE);
 
     // Default values.
@@ -679,8 +681,8 @@ import java.util.List;
   }
 
   private static void parseVideoSampleEntry(ParsableByteArray parent, int atomType, int position,
-      int size, int trackId, int rotationDegrees, DrmInitData drmInitData, StsdData out,
-      int entryIndex) throws ParserException {
+                                            int size, int trackId, int rotationDegrees, DrmInitData drmInitData, StsdData out,
+                                            int entryIndex) throws ParserException {
     parent.setPosition(position + Atom.HEADER_SIZE + StsdData.STSD_HEADER_SIZE);
 
     parent.skipBytes(16);
@@ -833,8 +835,8 @@ import java.util.List;
   }
 
   private static void parseAudioSampleEntry(ParsableByteArray parent, int atomType, int position,
-      int size, int trackId, String language, boolean isQuickTime, DrmInitData drmInitData,
-      StsdData out, int entryIndex) throws ParserException {
+                                            int size, int trackId, String language, boolean isQuickTime, DrmInitData drmInitData,
+                                            StsdData out, int entryIndex) throws ParserException {
     parent.setPosition(position + Atom.HEADER_SIZE + StsdData.STSD_HEADER_SIZE);
 
     int quickTimeSoundDescriptionVersion = 0;
@@ -1070,7 +1072,7 @@ import java.util.List;
    * encryption sinf atom was present.
    */
   private static Pair<Integer, TrackEncryptionBox> parseSampleEntryEncryptionData(
-      ParsableByteArray parent, int position, int size) {
+          ParsableByteArray parent, int position, int size) {
     int childPosition = parent.getPosition();
     while (childPosition - position < size) {
       parent.setPosition(childPosition);
@@ -1090,7 +1092,7 @@ import java.util.List;
   }
 
   /* package */ static Pair<Integer, TrackEncryptionBox> parseCommonEncryptionSinfFromParent(
-      ParsableByteArray parent, int position, int size) {
+          ParsableByteArray parent, int position, int size) {
     int childPosition = position + Atom.HEADER_SIZE;
     int schemeInformationBoxPosition = C.POSITION_UNSET;
     int schemeInformationBoxSize = 0;
@@ -1128,7 +1130,7 @@ import java.util.List;
   }
 
   private static TrackEncryptionBox parseSchiFromParent(ParsableByteArray parent, int position,
-      int size, String schemeType) {
+                                                        int size, String schemeType) {
     int childPosition = position + Atom.HEADER_SIZE;
     while (childPosition - position < size) {
       parent.setPosition(childPosition);
@@ -1215,7 +1217,7 @@ import java.util.List;
     private int remainingSamplesPerChunkChanges;
 
     public ChunkIterator(ParsableByteArray stsc, ParsableByteArray chunkOffsets,
-        boolean chunkOffsetsAreLongs) {
+                         boolean chunkOffsetsAreLongs) {
       this.stsc = stsc;
       this.chunkOffsets = chunkOffsets;
       this.chunkOffsetsAreLongs = chunkOffsetsAreLongs;

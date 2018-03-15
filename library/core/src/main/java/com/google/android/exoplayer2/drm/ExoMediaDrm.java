@@ -22,13 +22,14 @@ import android.media.MediaDrm;
 import android.media.MediaDrmException;
 import android.media.NotProvisionedException;
 import android.os.Handler;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * Used to obtain keys for decrypting protected media streams. See {@link android.media.MediaDrm}.
+ * Used to obtain keys for decrypting protected media streams. See {@link MediaDrm}.
  */
 @TargetApi(18)
 public interface ExoMediaDrm<T extends ExoMediaCrypto> {
@@ -66,7 +67,7 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
   int KEY_TYPE_RELEASE = MediaDrm.KEY_TYPE_RELEASE;
 
   /**
-   * @see android.media.MediaDrm.OnEventListener
+   * @see MediaDrm.OnEventListener
    */
   interface OnEventListener<T extends ExoMediaCrypto> {
     /**
@@ -79,11 +80,11 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
      * @param data optional byte array of data that may be associated with the event
      */
     void onEvent(ExoMediaDrm<? extends T> mediaDrm, byte[] sessionId, int event, int extra,
-        byte[] data);
+                 byte[] data);
   }
 
   /**
-   * @see android.media.MediaDrm.OnKeyStatusChangeListener
+   * @see MediaDrm.OnKeyStatusChangeListener
    */
   interface OnKeyStatusChangeListener<T extends ExoMediaCrypto> {
     /**
@@ -100,7 +101,7 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
   }
 
   /**
-   * @see android.media.MediaDrm.KeyStatus
+   * @see MediaDrm.KeyStatus
    */
   interface KeyStatus {
     int getStatusCode();
@@ -133,7 +134,7 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
   }
 
   /**
-   * @see android.media.MediaDrm.KeyRequest
+   * @see MediaDrm.KeyRequest
    */
   interface KeyRequest {
     byte[] getData();
@@ -166,7 +167,7 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
   }
 
   /**
-   * @see android.media.MediaDrm.ProvisionRequest
+   * @see MediaDrm.ProvisionRequest
    */
   interface ProvisionRequest {
     byte[] getData();
@@ -222,7 +223,7 @@ public interface ExoMediaDrm<T extends ExoMediaCrypto> {
    * @see MediaDrm#getKeyRequest(byte[], byte[], String, int, HashMap)
    */
   KeyRequest getKeyRequest(byte[] scope, byte[] init, String mimeType, int keyType,
-      HashMap<String, String> optionalParameters) throws NotProvisionedException;
+                           HashMap<String, String> optionalParameters) throws NotProvisionedException;
 
   /**
    * @see MediaDrm#provideKeyResponse(byte[], byte[])

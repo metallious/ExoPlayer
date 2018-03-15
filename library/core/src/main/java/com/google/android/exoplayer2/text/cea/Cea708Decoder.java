@@ -26,6 +26,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.text.Cue;
@@ -36,6 +37,7 @@ import com.google.android.exoplayer2.text.SubtitleInputBuffer;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -104,7 +106,7 @@ public final class Cea708Decoder extends CeaDecoder {
   private static final int COMMAND_DF1 = 0x99;  // DefineWindow 1 (+6 bytes)
   private static final int COMMAND_DF2 = 0x9A;  // DefineWindow 2 (+6 bytes)
   private static final int COMMAND_DF3 = 0x9B;  // DefineWindow 3 (+6 bytes)
-  private static final int COMMAND_DS4 = 0x9C;  // DefineWindow 4 (+6 bytes)
+  private static final int COMMAND_DF4 = 0x9C; // DefineWindow 4 (+6 bytes)
   private static final int COMMAND_DF5 = 0x9D;  // DefineWindow 5 (+6 bytes)
   private static final int COMMAND_DF6 = 0x9E;  // DefineWindow 6 (+6 bytes)
   private static final int COMMAND_DF7 = 0x9F;  // DefineWindow 7 (+6 bytes)
@@ -464,7 +466,7 @@ public final class Cea708Decoder extends CeaDecoder {
       case COMMAND_DF1:
       case COMMAND_DF2:
       case COMMAND_DF3:
-      case COMMAND_DS4:
+      case COMMAND_DF4:
       case COMMAND_DF5:
       case COMMAND_DF6:
       case COMMAND_DF7:

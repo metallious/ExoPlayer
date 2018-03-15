@@ -57,8 +57,8 @@ public final class TrackSelectorResult {
    *     to be used with the selections.
    */
   public TrackSelectorResult(TrackGroupArray groups, boolean[] renderersEnabled,
-      TrackSelectionArray selections, Object info,
-      RendererConfiguration[] rendererConfigurations) {
+                             TrackSelectionArray selections, Object info,
+                             RendererConfiguration[] rendererConfigurations) {
     this.groups = groups;
     this.renderersEnabled = renderersEnabled;
     this.selections = selections;
@@ -74,7 +74,7 @@ public final class TrackSelectorResult {
    * @return Whether this result is equivalent to {@code other} for all renderers.
    */
   public boolean isEquivalent(TrackSelectorResult other) {
-    if (other == null) {
+    if (other == null || other.selections.length != selections.length) {
       return false;
     }
     for (int i = 0; i < selections.length; i++) {

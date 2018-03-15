@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.drm;
 import android.annotation.TargetApi;
 import android.net.Uri;
 import android.text.TextUtils;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.drm.ExoMediaDrm.KeyRequest;
 import com.google.android.exoplayer2.drm.ExoMediaDrm.ProvisionRequest;
@@ -26,6 +27,7 @@ import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -131,7 +133,7 @@ public final class HttpMediaDrmCallback implements MediaDrmCallback {
   }
 
   private static byte[] executePost(HttpDataSource.Factory dataSourceFactory, String url,
-      byte[] data, Map<String, String> requestProperties) throws IOException {
+                                    byte[] data, Map<String, String> requestProperties) throws IOException {
     HttpDataSource dataSource = dataSourceFactory.createDataSource();
     if (requestProperties != null) {
       for (Map.Entry<String, String> requestProperty : requestProperties.entrySet()) {

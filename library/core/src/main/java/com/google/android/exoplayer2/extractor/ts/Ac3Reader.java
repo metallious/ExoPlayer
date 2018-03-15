@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.support.annotation.IntDef;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.audio.Ac3Util;
@@ -24,6 +25,7 @@ import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.extractor.ts.TsPayloadReader.TrackIdGenerator;
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -39,7 +41,7 @@ public final class Ac3Reader implements ElementaryStreamReader {
   private static final int STATE_READING_HEADER = 1;
   private static final int STATE_READING_SAMPLE = 2;
 
-  private static final int HEADER_SIZE = 8;
+  private static final int HEADER_SIZE = 128;
 
   private final ParsableBitArray headerScratchBits;
   private final ParsableByteArray headerScratchBytes;

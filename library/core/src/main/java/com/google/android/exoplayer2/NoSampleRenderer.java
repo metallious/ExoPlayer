@@ -18,6 +18,7 @@ package com.google.android.exoplayer2;
 import com.google.android.exoplayer2.source.SampleStream;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.MediaClock;
+
 import java.io.IOException;
 
 /**
@@ -74,7 +75,7 @@ public abstract class NoSampleRenderer implements Renderer, RendererCapabilities
    */
   @Override
   public final void enable(RendererConfiguration configuration, Format[] formats,
-      SampleStream stream, long positionUs, boolean joining, long offsetUs)
+                           SampleStream stream, long positionUs, boolean joining, long offsetUs)
       throws ExoPlaybackException {
     Assertions.checkState(state == STATE_DISABLED);
     this.configuration = configuration;
@@ -179,7 +180,7 @@ public abstract class NoSampleRenderer implements Renderer, RendererCapabilities
     return ADAPTIVE_NOT_SUPPORTED;
   }
 
-  // ExoPlayerComponent implementation.
+  // PlayerMessage.Target implementation.
 
   @Override
   public void handleMessage(int what, Object object) throws ExoPlaybackException {

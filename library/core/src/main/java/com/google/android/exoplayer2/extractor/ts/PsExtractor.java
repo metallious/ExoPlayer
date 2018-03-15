@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.extractor.Extractor;
@@ -28,10 +29,11 @@ import com.google.android.exoplayer2.extractor.ts.TsPayloadReader.TrackIdGenerat
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
+
 import java.io.IOException;
 
 /**
- * Facilitates the extraction of data from the MPEG-2 PS container format.
+ * Extracts data from the MPEG-2 PS container format.
  */
 public final class PsExtractor implements Extractor {
 

@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.extractor;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public interface TrackOutput {
      * @param clearBlocks See {@link #clearBlocks}.
      */
     public CryptoData(@C.CryptoMode int cryptoMode, byte[] encryptionKey, int encryptedBlocks,
-        int clearBlocks) {
+                      int clearBlocks) {
       this.cryptoMode = cryptoMode;
       this.encryptionKey = encryptionKey;
       this.encryptedBlocks = encryptedBlocks;
@@ -139,6 +140,6 @@ public interface TrackOutput {
    * @param encryptionData The encryption data required to decrypt the sample. May be null.
    */
   void sampleMetadata(long timeUs, @C.BufferFlags int flags, int size, int offset,
-      CryptoData encryptionData);
+                      CryptoData encryptionData);
 
 }

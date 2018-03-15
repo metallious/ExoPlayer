@@ -16,8 +16,10 @@
 package com.google.android.exoplayer2.util;
 
 import android.util.Pair;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ParserException;
+
 import java.util.ArrayList;
 import java.util.List;
 

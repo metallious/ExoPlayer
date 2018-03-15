@@ -19,6 +19,7 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.text.Subtitle;
 import com.google.android.exoplayer2.util.Util;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ import java.util.Map;
   private final Map<String, TtmlRegion> regionMap;
 
   public TtmlSubtitle(TtmlNode root, Map<String, TtmlStyle> globalStyles,
-      Map<String, TtmlRegion> regionMap) {
+                      Map<String, TtmlRegion> regionMap) {
     this.root = root;
     this.regionMap = regionMap;
     this.globalStyles = globalStyles != null

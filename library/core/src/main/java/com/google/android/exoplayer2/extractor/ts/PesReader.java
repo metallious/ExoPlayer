@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
@@ -62,7 +63,7 @@ public final class PesReader implements TsPayloadReader {
 
   @Override
   public void init(TimestampAdjuster timestampAdjuster, ExtractorOutput extractorOutput,
-      TrackIdGenerator idGenerator) {
+                   TrackIdGenerator idGenerator) {
     this.timestampAdjuster = timestampAdjuster;
     reader.createTracks(extractorOutput, idGenerator);
   }

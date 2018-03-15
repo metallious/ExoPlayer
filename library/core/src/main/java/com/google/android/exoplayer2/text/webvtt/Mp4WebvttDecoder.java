@@ -20,6 +20,7 @@ import com.google.android.exoplayer2.text.SimpleSubtitleDecoder;
 import com.google.android.exoplayer2.text.SubtitleDecoderException;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,7 +69,7 @@ public final class Mp4WebvttDecoder extends SimpleSubtitleDecoder {
   }
 
   private static Cue parseVttCueBox(ParsableByteArray sampleData, WebvttCue.Builder builder,
-        int remainingCueBoxBytes) throws SubtitleDecoderException {
+                                    int remainingCueBoxBytes) throws SubtitleDecoderException {
     builder.reset();
     while (remainingCueBoxBytes > 0) {
       if (remainingCueBoxBytes < BOX_HEADER_SIZE) {

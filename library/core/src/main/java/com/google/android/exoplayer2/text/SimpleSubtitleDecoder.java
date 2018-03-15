@@ -17,13 +17,14 @@ package com.google.android.exoplayer2.text;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.decoder.SimpleDecoder;
+
 import java.nio.ByteBuffer;
 
 /**
  * Base class for subtitle parsers that use their own decode thread.
  */
 public abstract class SimpleSubtitleDecoder extends
-    SimpleDecoder<SubtitleInputBuffer, SubtitleOutputBuffer, SubtitleDecoderException> implements
+        SimpleDecoder<SubtitleInputBuffer, SubtitleOutputBuffer, SubtitleDecoderException> implements
     SubtitleDecoder {
 
   private final String name;
@@ -58,13 +59,18 @@ public abstract class SimpleSubtitleDecoder extends
   }
 
   @Override
+  protected final SubtitleDecoderException createUnexpectedDecodeException(Throwable error) {
+    return new SubtitleDecoderException("Unexpected decode error", error);
+  }
+
+  @Override
   protected final void releaseOutputBuffer(SubtitleOutputBuffer buffer) {
     super.releaseOutputBuffer(buffer);
   }
 
   @Override
   protected final SubtitleDecoderException decode(SubtitleInputBuffer inputBuffer,
-      SubtitleOutputBuffer outputBuffer, boolean reset) {
+                                                  SubtitleOutputBuffer outputBuffer, boolean reset) {
     try {
       ByteBuffer inputData = inputBuffer.data;
       Subtitle subtitle = decode(inputData.array(), inputData.limit(), reset);

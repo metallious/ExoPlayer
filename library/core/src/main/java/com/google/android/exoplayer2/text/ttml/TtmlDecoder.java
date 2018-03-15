@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.text.ttml;
 
 import android.text.Layout;
 import android.util.Log;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.text.SimpleSubtitleDecoder;
@@ -24,6 +25,11 @@ import com.google.android.exoplayer2.text.SubtitleDecoderException;
 import com.google.android.exoplayer2.util.ColorParser;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.util.XmlPullParserUtil;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,9 +37,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 /**
  * A {@link SimpleSubtitleDecoder} for TTML supporting the DFXP presentation profile. Features
@@ -405,7 +408,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
   }
 
   private TtmlNode parseNode(XmlPullParser parser, TtmlNode parent,
-      Map<String, TtmlRegion> regionMap, FrameAndTickRate frameAndTickRate)
+                             Map<String, TtmlRegion> regionMap, FrameAndTickRate frameAndTickRate)
       throws SubtitleDecoderException {
     long duration = C.TIME_UNSET;
     long startTime = C.TIME_UNSET;

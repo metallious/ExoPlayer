@@ -24,6 +24,7 @@ import com.google.android.exoplayer2.extractor.PositionHolder;
 import com.google.android.exoplayer2.extractor.SeekMap;
 import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.io.IOException;
 
 /**
@@ -229,7 +230,7 @@ import java.io.IOException;
    * @return Whether the packet contains header data.
    */
   protected abstract boolean readHeaders(ParsableByteArray packet, long position,
-      SetupData setupData) throws IOException, InterruptedException;
+                                         SetupData setupData) throws IOException, InterruptedException;
 
   /**
    * Called on end of seeking.

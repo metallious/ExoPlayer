@@ -16,11 +16,13 @@
 package com.google.android.exoplayer2.trackselection;
 
 import android.os.SystemClock;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.chunk.MediaChunk;
 import com.google.android.exoplayer2.util.Assertions;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -79,6 +81,16 @@ public abstract class BaseTrackSelection implements TrackSelection {
   }
 
   @Override
+  public void enable() {
+    // Do nothing.
+  }
+
+  @Override
+  public void disable() {
+    // Do nothing.
+  }
+
+  @Override
   public final TrackGroup getTrackGroup() {
     return group;
   }
@@ -126,6 +138,11 @@ public abstract class BaseTrackSelection implements TrackSelection {
   @Override
   public final int getSelectedIndexInTrackGroup() {
     return tracks[getSelectedIndex()];
+  }
+
+  @Override
+  public void onPlaybackSpeed(float playbackSpeed) {
+    // Do nothing.
   }
 
   @Override

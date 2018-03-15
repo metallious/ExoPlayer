@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.util;
 
 import android.os.Looper;
 import android.text.TextUtils;
+
 import com.google.android.exoplayer2.ExoPlayerLibraryInfo;
 
 /**

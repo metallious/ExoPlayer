@@ -16,9 +16,11 @@
 package com.google.android.exoplayer2.text.ttml;
 
 import android.text.SpannableStringBuilder;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.util.Assertions;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +97,7 @@ import java.util.TreeSet;
   }
 
   public static TtmlNode buildNode(String tag, long startTimeUs, long endTimeUs,
-      TtmlStyle style, String[] styleIds, String regionId) {
+                                   TtmlStyle style, String[] styleIds, String regionId) {
     return new TtmlNode(tag, null, startTimeUs, endTimeUs, style, styleIds, regionId);
   }
 

@@ -32,8 +32,10 @@ import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,7 +47,7 @@ import java.util.regex.Pattern;
 /**
  * Parser for WebVTT cues. (https://w3c.github.io/webvtt/#cues)
  */
-/* package */ final class WebvttCueParser {
+public final class WebvttCueParser {
 
   public static final Pattern CUE_HEADER_PATTERN = Pattern
       .compile("^(\\S+)\\s+-->\\s+(\\S+)(.*)?$");
@@ -90,8 +92,8 @@ import java.util.regex.Pattern;
    * @param styles List of styles defined by the CSS style blocks preceeding the cues.
    * @return Whether a valid Cue was found.
    */
-  /* package */ boolean parseCue(ParsableByteArray webvttData, WebvttCue.Builder builder,
-      List<WebvttCssStyle> styles) {
+  public boolean parseCue(ParsableByteArray webvttData, WebvttCue.Builder builder,
+                          List<WebvttCssStyle> styles) {
     String firstLine = webvttData.readLine();
     if (firstLine == null) {
       return false;

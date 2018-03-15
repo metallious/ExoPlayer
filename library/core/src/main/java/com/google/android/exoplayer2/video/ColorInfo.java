@@ -17,8 +17,10 @@ package com.google.android.exoplayer2.video;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
+
 import java.util.Arrays;
 
 /**
@@ -65,7 +67,7 @@ public final class ColorInfo implements Parcelable {
    * @param hdrStaticInfo HdrStaticInfo as defined in CTA-861.3.
    */
   public ColorInfo(@C.ColorSpace int colorSpace, @C.ColorRange int colorRange,
-      @C.ColorTransfer int colorTransfer, byte[] hdrStaticInfo) {
+                   @C.ColorTransfer int colorTransfer, byte[] hdrStaticInfo) {
     this.colorSpace = colorSpace;
     this.colorRange = colorRange;
     this.colorTransfer = colorTransfer;
@@ -91,12 +93,10 @@ public final class ColorInfo implements Parcelable {
       return false;
     }
     ColorInfo other = (ColorInfo) obj;
-    if (colorSpace != other.colorSpace || colorRange != other.colorRange
-        || colorTransfer != other.colorTransfer
-        || !Arrays.equals(hdrStaticInfo, other.hdrStaticInfo)) {
-      return false;
-    }
-    return true;
+    return colorSpace == other.colorSpace
+        && colorRange == other.colorRange
+        && colorTransfer == other.colorTransfer
+        && Arrays.equals(hdrStaticInfo, other.hdrStaticInfo);
   }
 
   @Override
@@ -134,7 +134,7 @@ public final class ColorInfo implements Parcelable {
     }
   }
 
-  public static final Parcelable.Creator<ColorInfo> CREATOR = new Parcelable.Creator<ColorInfo>() {
+  public static final Creator<ColorInfo> CREATOR = new Creator<ColorInfo>() {
     @Override
     public ColorInfo createFromParcel(Parcel in) {
       return new ColorInfo(in);

@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2;
 
 import android.os.Handler;
+
 import com.google.android.exoplayer2.audio.AudioRendererEventListener;
 import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.text.TextOutput;
@@ -37,8 +38,8 @@ public interface RenderersFactory {
    * @return The {@link Renderer instances}.
    */
   Renderer[] createRenderers(Handler eventHandler,
-      VideoRendererEventListener videoRendererEventListener,
-      AudioRendererEventListener audioRendererEventListener, TextOutput textRendererOutput,
-      MetadataOutput metadataRendererOutput);
+                             VideoRendererEventListener videoRendererEventListener,
+                             AudioRendererEventListener audioRendererEventListener, TextOutput textRendererOutput,
+                             MetadataOutput metadataRendererOutput);
 
 }

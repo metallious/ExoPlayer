@@ -16,12 +16,15 @@
 package com.google.android.exoplayer2.drm;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.util.Util;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility methods for ClearKey.

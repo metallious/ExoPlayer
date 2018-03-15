@@ -24,10 +24,12 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.util.Pair;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.drm.ExoMediaDrm.DefaultKeyRequest;
 import com.google.android.exoplayer2.drm.ExoMediaDrm.KeyRequest;
 import com.google.android.exoplayer2.drm.ExoMediaDrm.ProvisionRequest;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

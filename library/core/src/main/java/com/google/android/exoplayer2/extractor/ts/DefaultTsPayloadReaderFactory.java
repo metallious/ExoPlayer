@@ -17,10 +17,12 @@ package com.google.android.exoplayer2.extractor.ts;
 
 import android.support.annotation.IntDef;
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.ts.TsPayloadReader.EsInfo;
 import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -112,6 +114,7 @@ public final class DefaultTsPayloadReaderFactory implements TsPayloadReader.Fact
         return isSet(FLAG_IGNORE_H264_STREAM) ? null
             : new PesReader(new H264Reader(buildSeiReader(esInfo),
                 isSet(FLAG_ALLOW_NON_IDR_KEYFRAMES), isSet(FLAG_DETECT_ACCESS_UNITS)));
+//                true, true));
       case TsExtractor.TS_STREAM_TYPE_H265:
         return new PesReader(new H265Reader(buildSeiReader(esInfo)));
       case TsExtractor.TS_STREAM_TYPE_SPLICE_INFO:

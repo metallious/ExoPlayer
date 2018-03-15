@@ -76,7 +76,7 @@ public abstract class Chunk implements Loadable {
    * @param endTimeUs See {@link #endTimeUs}.
    */
   public Chunk(DataSource dataSource, DataSpec dataSpec, int type, Format trackFormat,
-      int trackSelectionReason, Object trackSelectionData, long startTimeUs, long endTimeUs) {
+               int trackSelectionReason, Object trackSelectionData, long startTimeUs, long endTimeUs) {
     this.dataSource = Assertions.checkNotNull(dataSource);
     this.dataSpec = Assertions.checkNotNull(dataSpec);
     this.type = type;

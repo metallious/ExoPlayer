@@ -58,7 +58,7 @@ public abstract class ForwardingTimeline extends Timeline {
 
   @Override
   public Window getWindow(int windowIndex, Window window, boolean setIds,
-      long defaultPositionProjectionUs) {
+                          long defaultPositionProjectionUs) {
     return timeline.getWindow(windowIndex, window, setIds, defaultPositionProjectionUs);
   }
 

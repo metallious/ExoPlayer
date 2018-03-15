@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.source.chunk;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.upstream.HttpDataSource.InvalidResponseCodeException;
 
@@ -45,7 +46,7 @@ public final class ChunkedTrackBlacklistUtil {
    * @return Whether the track was blacklisted in the selection.
    */
   public static boolean maybeBlacklistTrack(TrackSelection trackSelection, int trackSelectionIndex,
-      Exception e) {
+                                            Exception e) {
     return maybeBlacklistTrack(trackSelection, trackSelectionIndex, e, DEFAULT_TRACK_BLACKLIST_MS);
   }
 
@@ -62,7 +63,7 @@ public final class ChunkedTrackBlacklistUtil {
    * @return Whether the track was blacklisted.
    */
   public static boolean maybeBlacklistTrack(TrackSelection trackSelection, int trackSelectionIndex,
-      Exception e, long blacklistDurationMs) {
+                                            Exception e, long blacklistDurationMs) {
     if (shouldBlacklist(e)) {
       boolean blacklisted = trackSelection.blacklist(trackSelectionIndex, blacklistDurationMs);
       int responseCode = ((InvalidResponseCodeException) e).responseCode;

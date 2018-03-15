@@ -29,6 +29,7 @@ import com.google.android.exoplayer2.extractor.ts.TsExtractor;
 import com.google.android.exoplayer2.extractor.ts.TsPayloadReader;
 import com.google.android.exoplayer2.extractor.wav.WavExtractor;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
+
 import java.lang.reflect.Constructor;
 
 /**
@@ -55,13 +56,17 @@ public final class DefaultExtractorsFactory implements ExtractorsFactory {
   static {
     Constructor<? extends Extractor> flacExtractorConstructor = null;
     try {
+      // LINT.IfChange
       flacExtractorConstructor =
           Class.forName("com.google.android.exoplayer2.ext.flac.FlacExtractor")
-              .asSubclass(Extractor.class).getConstructor();
+              .asSubclass(Extractor.class)
+              .getConstructor();
+      // LINT.ThenChange(../../../../../../../../proguard-rules.txt)
     } catch (ClassNotFoundException e) {
-      // Extractor not found.
-    } catch (NoSuchMethodException e) {
-      // Constructor not found.
+      // Expected if the app was built without the FLAC extension.
+    } catch (Exception e) {
+      // The FLAC extension is present, but instantiation failed.
+      throw new RuntimeException("Error instantiating FLAC extension", e);
     }
     FLAC_EXTRACTOR_CONSTRUCTOR = flacExtractorConstructor;
   }

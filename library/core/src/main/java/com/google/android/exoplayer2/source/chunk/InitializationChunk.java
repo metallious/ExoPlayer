@@ -24,6 +24,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 
 /**
@@ -45,8 +46,8 @@ public final class InitializationChunk extends Chunk {
    * @param extractorWrapper A wrapped extractor to use for parsing the initialization data.
    */
   public InitializationChunk(DataSource dataSource, DataSpec dataSpec, Format trackFormat,
-      int trackSelectionReason, Object trackSelectionData,
-      ChunkExtractorWrapper extractorWrapper) {
+                             int trackSelectionReason, Object trackSelectionData,
+                             ChunkExtractorWrapper extractorWrapper) {
     super(dataSource, dataSpec, C.DATA_TYPE_MEDIA_INITIALIZATION, trackFormat, trackSelectionReason,
         trackSelectionData, C.TIME_UNSET, C.TIME_UNSET);
     this.extractorWrapper = extractorWrapper;

@@ -25,9 +25,11 @@ import android.media.NotProvisionedException;
 import android.media.UnsupportedSchemeException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,7 +117,7 @@ public final class FrameworkMediaDrm implements ExoMediaDrm<FrameworkMediaCrypto
 
   @Override
   public KeyRequest getKeyRequest(byte[] scope, byte[] init, String mimeType, int keyType,
-      HashMap<String, String> optionalParameters) throws NotProvisionedException {
+                                  HashMap<String, String> optionalParameters) throws NotProvisionedException {
     final MediaDrm.KeyRequest request = mediaDrm.getKeyRequest(scope, init, mimeType, keyType,
         optionalParameters);
     return new DefaultKeyRequest(request.getData(), request.getDefaultUrl());

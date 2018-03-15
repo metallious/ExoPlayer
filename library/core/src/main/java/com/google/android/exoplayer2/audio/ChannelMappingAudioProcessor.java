@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.audio;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.C.Encoding;
 import com.google.android.exoplayer2.Format;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ import java.util.Arrays;
    * Resets the channel mapping. After calling this method, call {@link #configure(int, int, int)}
    * to start using the new channel map.
    *
-   * @see AudioSink#configure(String, int, int, int, int, int[], int, int)
+   * @see AudioSink#configure(int, int, int, int, int[], int, int)
    */
   public void setChannelMap(int[] outputChannels) {
     pendingOutputChannels = outputChannels;

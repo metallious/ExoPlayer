@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.extractor.mp4;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.id3.ApicFrame;
 import com.google.android.exoplayer2.metadata.id3.CommentFrame;
@@ -182,7 +183,7 @@ import com.google.android.exoplayer2.util.Util;
   }
 
   private static TextInformationFrame parseTextAttribute(int type, String id,
-      ParsableByteArray data) {
+                                                         ParsableByteArray data) {
     int atomSize = data.readInt();
     int atomType = data.readInt();
     if (atomType == Atom.TYPE_data) {
@@ -207,7 +208,7 @@ import com.google.android.exoplayer2.util.Util;
   }
 
   private static Id3Frame parseUint8Attribute(int type, String id, ParsableByteArray data,
-      boolean isTextInformationFrame, boolean isBoolean) {
+                                              boolean isTextInformationFrame, boolean isBoolean) {
     int value = parseUint8AttributeValue(data);
     if (isBoolean) {
       value = Math.min(1, value);
@@ -221,7 +222,7 @@ import com.google.android.exoplayer2.util.Util;
   }
 
   private static TextInformationFrame parseIndexAndCountAttribute(int type, String attributeName,
-      ParsableByteArray data) {
+                                                                  ParsableByteArray data) {
     int atomSize = data.readInt();
     int atomType = data.readInt();
     if (atomType == Atom.TYPE_data && atomSize >= 22) {

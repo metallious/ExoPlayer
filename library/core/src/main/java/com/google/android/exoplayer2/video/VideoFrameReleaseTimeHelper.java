@@ -26,6 +26,7 @@ import android.view.Choreographer;
 import android.view.Choreographer.FrameCallback;
 import android.view.Display;
 import android.view.WindowManager;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.util.Util;
 

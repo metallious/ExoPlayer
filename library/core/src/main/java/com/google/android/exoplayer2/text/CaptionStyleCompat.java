@@ -19,9 +19,10 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.IntDef;
-import android.view.accessibility.CaptioningManager;
 import android.view.accessibility.CaptioningManager.CaptionStyle;
+
 import com.google.android.exoplayer2.util.Util;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -114,7 +115,7 @@ public final class CaptionStyleCompat {
    */
   @TargetApi(19)
   public static CaptionStyleCompat createFromCaptionStyle(
-      CaptioningManager.CaptionStyle captionStyle) {
+      CaptionStyle captionStyle) {
     if (Util.SDK_INT >= 21) {
       return createFromCaptionStyleV21(captionStyle);
     } else {
@@ -145,7 +146,7 @@ public final class CaptionStyleCompat {
   @TargetApi(19)
   @SuppressWarnings("ResourceType")
   private static CaptionStyleCompat createFromCaptionStyleV19(
-      CaptioningManager.CaptionStyle captionStyle) {
+      CaptionStyle captionStyle) {
     return new CaptionStyleCompat(
         captionStyle.foregroundColor, captionStyle.backgroundColor, Color.TRANSPARENT,
         captionStyle.edgeType, captionStyle.edgeColor, captionStyle.getTypeface());
@@ -154,7 +155,7 @@ public final class CaptionStyleCompat {
   @TargetApi(21)
   @SuppressWarnings("ResourceType")
   private static CaptionStyleCompat createFromCaptionStyleV21(
-      CaptioningManager.CaptionStyle captionStyle) {
+      CaptionStyle captionStyle) {
     return new CaptionStyleCompat(
         captionStyle.hasForegroundColor() ? captionStyle.foregroundColor : DEFAULT.foregroundColor,
         captionStyle.hasBackgroundColor() ? captionStyle.backgroundColor : DEFAULT.backgroundColor,

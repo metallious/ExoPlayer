@@ -18,10 +18,12 @@ package com.google.android.exoplayer2.source;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.util.Assertions;
+
 import java.util.Arrays;
 
 // TODO: Add an allowMultipleStreams boolean to indicate where the one stream per group restriction
 // does not apply.
+
 /**
  * Defines a group of tracks exposed by a {@link MediaPeriod}.
  * <p>

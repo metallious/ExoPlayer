@@ -16,11 +16,13 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
 import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -181,7 +183,7 @@ public interface TsPayloadReader {
    *     {@link TrackOutput}s.
    */
   void init(TimestampAdjuster timestampAdjuster, ExtractorOutput extractorOutput,
-      TrackIdGenerator idGenerator);
+            TrackIdGenerator idGenerator);
 
   /**
    * Notifies the reader that a seek has occurred.

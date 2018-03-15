@@ -24,9 +24,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Region;
 import android.util.Log;
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.Util;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -661,7 +663,7 @@ import java.util.List;
    * Paint a 2-bit/pixel code string, as defined by ETSI EN 300 743 7.2.5.2, to a canvas.
    */
   private static int paint2BitPixelCodeString(ParsableBitArray data, int[] clutEntries,
-      byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
+                                              byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
     boolean endOfPixelCodeString = false;
     do {
       int runLength = 0;
@@ -709,7 +711,7 @@ import java.util.List;
    * Paint a 4-bit/pixel code string, as defined by ETSI EN 300 743 7.2.5.2, to a canvas.
    */
   private static int paint4BitPixelCodeString(ParsableBitArray data, int[] clutEntries,
-      byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
+                                              byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
     boolean endOfPixelCodeString = false;
     do {
       int runLength = 0;
@@ -763,7 +765,7 @@ import java.util.List;
    * Paint an 8-bit/pixel code string, as defined by ETSI EN 300 743 7.2.5.2, to a canvas.
    */
   private static int paint8BitPixelCodeString(ParsableBitArray data, int[] clutEntries,
-      byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
+                                              byte[] clutMapTable, int column, int line, Paint paint, Canvas canvas) {
     boolean endOfPixelCodeString = false;
     do {
       int runLength = 0;

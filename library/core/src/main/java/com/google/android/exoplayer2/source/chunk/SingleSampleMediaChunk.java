@@ -23,6 +23,7 @@ import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 
 /**
@@ -50,9 +51,17 @@ public final class SingleSampleMediaChunk extends BaseMediaChunk {
    *     constants.
    * @param sampleFormat The {@link Format} of the sample in the chunk.
    */
-  public SingleSampleMediaChunk(DataSource dataSource, DataSpec dataSpec, Format trackFormat,
-      int trackSelectionReason, Object trackSelectionData, long startTimeUs, long endTimeUs,
-      int chunkIndex, int trackType, Format sampleFormat) {
+  public SingleSampleMediaChunk(
+      DataSource dataSource,
+      DataSpec dataSpec,
+      Format trackFormat,
+      int trackSelectionReason,
+      Object trackSelectionData,
+      long startTimeUs,
+      long endTimeUs,
+      long chunkIndex,
+      int trackType,
+      Format sampleFormat) {
     super(dataSource, dataSpec, trackFormat, trackSelectionReason, trackSelectionData, startTimeUs,
         endTimeUs, chunkIndex);
     this.trackType = trackType;

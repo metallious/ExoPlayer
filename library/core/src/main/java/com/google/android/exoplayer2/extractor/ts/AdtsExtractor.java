@@ -26,10 +26,11 @@ import com.google.android.exoplayer2.extractor.ts.TsPayloadReader.TrackIdGenerat
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 
 /**
- * Extracts samples from AAC bit streams with ADTS framing.
+ * Extracts data from AAC bit streams with ADTS framing.
  */
 public final class AdtsExtractor implements Extractor {
 

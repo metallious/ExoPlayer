@@ -19,6 +19,7 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -30,8 +31,9 @@ public final class DefaultExtractorInput implements ExtractorInput {
 
   private static final int PEEK_MIN_FREE_SPACE_AFTER_RESIZE = 64 * 1024;
   private static final int PEEK_MAX_FREE_SPACE = 512 * 1024;
-  private static final byte[] SCRATCH_SPACE = new byte[4096];
+  private static final int SCRATCH_SPACE_SIZE = 4096;
 
+  private final byte[] scratchSpace;
   private final DataSource dataSource;
   private final long streamLength;
 
@@ -50,6 +52,7 @@ public final class DefaultExtractorInput implements ExtractorInput {
     this.position = position;
     this.streamLength = length;
     peekBuffer = new byte[PEEK_MIN_FREE_SPACE_AFTER_RESIZE];
+    scratchSpace = new byte[SCRATCH_SPACE_SIZE];
   }
 
   @Override
@@ -84,7 +87,7 @@ public final class DefaultExtractorInput implements ExtractorInput {
     int bytesSkipped = skipFromPeekBuffer(length);
     if (bytesSkipped == 0) {
       bytesSkipped =
-          readFromDataSource(SCRATCH_SPACE, 0, Math.min(length, SCRATCH_SPACE.length), 0, true);
+          readFromDataSource(scratchSpace, 0, Math.min(length, scratchSpace.length), 0, true);
     }
     commitBytesRead(bytesSkipped);
     return bytesSkipped;
@@ -95,8 +98,9 @@ public final class DefaultExtractorInput implements ExtractorInput {
       throws IOException, InterruptedException {
     int bytesSkipped = skipFromPeekBuffer(length);
     while (bytesSkipped < length && bytesSkipped != C.RESULT_END_OF_INPUT) {
-      bytesSkipped = readFromDataSource(SCRATCH_SPACE, -bytesSkipped,
-          Math.min(length, bytesSkipped + SCRATCH_SPACE.length), bytesSkipped, allowEndOfInput);
+      int minLength = Math.min(length, bytesSkipped + scratchSpace.length);
+      bytesSkipped =
+          readFromDataSource(scratchSpace, -bytesSkipped, minLength, bytesSkipped, allowEndOfInput);
     }
     commitBytesRead(bytesSkipped);
     return bytesSkipped != C.RESULT_END_OF_INPUT;

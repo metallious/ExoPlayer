@@ -16,7 +16,9 @@
 package com.google.android.exoplayer2.decoder;
 
 import android.support.annotation.IntDef;
+
 import com.google.android.exoplayer2.C;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;

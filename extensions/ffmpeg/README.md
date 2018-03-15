@@ -67,6 +67,7 @@ COMMON_OPTIONS="\
     --enable-decoder=vorbis \
     --enable-decoder=opus \
     --enable-decoder=flac \
+    --enable-decoder=ac3 \
     " && \
 cd "${FFMPEG_EXT_PATH}/jni" && \
 git clone git://source.ffmpeg.org/ffmpeg ffmpeg && cd ffmpeg && \

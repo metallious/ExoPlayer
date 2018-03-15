@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.audio;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.Renderer;
@@ -53,7 +54,7 @@ public interface AudioRendererEventListener {
    * @param initializationDurationMs The time taken to initialize the decoder in milliseconds.
    */
   void onAudioDecoderInitialized(String decoderName, long initializedTimestampMs,
-      long initializationDurationMs);
+                                 long initializationDurationMs);
 
   /**
    * Called when the format of the media being consumed by the renderer changes.
@@ -85,8 +86,10 @@ public interface AudioRendererEventListener {
    */
   final class EventDispatcher {
 
-    @Nullable private final Handler handler;
-    @Nullable private final AudioRendererEventListener listener;
+    @Nullable
+    private final Handler handler;
+    @Nullable
+    private final AudioRendererEventListener listener;
 
     /**
      * @param handler A handler for dispatching events, or null if creating a dummy instance.

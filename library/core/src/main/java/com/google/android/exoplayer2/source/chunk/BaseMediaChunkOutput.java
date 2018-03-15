@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.source.chunk;
 
 import android.util.Log;
+
 import com.google.android.exoplayer2.extractor.DummyTrackOutput;
 import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.source.SampleQueue;

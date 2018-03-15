@@ -55,13 +55,23 @@ public class AgressiveLoadControl implements LoadControl {
     }
 
     @Override
-    public boolean shouldStartPlayback(long bufferedDurationUs, boolean rebuffering) {
-        return rebuffering || bufferedDurationUs >= minBufferToStartPlayback;
+    public long getBackBufferDurationUs() {
+        return 0;
     }
 
     @Override
-    public boolean shouldContinueLoading(long bufferedDurationUs) {
+    public boolean retainBackBufferFromKeyframe() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldContinueLoading(long bufferedDurationUs, float playbackSpeed) {
         return true;
+    }
+
+    @Override
+    public boolean shouldStartPlayback(long bufferedDurationUs, float playbackSpeed, boolean rebuffering) {
+        return rebuffering || bufferedDurationUs >= minBufferToStartPlayback;
     }
 
     /**

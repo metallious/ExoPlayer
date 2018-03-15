@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.source.chunk;
 
 import android.util.SparseArray;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.DummyTrackOutput;
@@ -26,6 +27,7 @@ import com.google.android.exoplayer2.extractor.SeekMap;
 import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.io.IOException;
 
 /**
@@ -74,7 +76,7 @@ public final class ChunkExtractorWrapper implements ExtractorOutput {
    *     into any sample {@link Format} output from the {@link Extractor} for the primary track.
    */
   public ChunkExtractorWrapper(Extractor extractor, int primaryTrackType,
-      Format primaryTrackManifestFormat) {
+                               Format primaryTrackManifestFormat) {
     this.extractor = extractor;
     this.primaryTrackType = primaryTrackType;
     this.primaryTrackManifestFormat = primaryTrackManifestFormat;
@@ -193,7 +195,7 @@ public final class ChunkExtractorWrapper implements ExtractorOutput {
 
     @Override
     public void sampleMetadata(long timeUs, @C.BufferFlags int flags, int size, int offset,
-        CryptoData cryptoData) {
+                               CryptoData cryptoData) {
       trackOutput.sampleMetadata(timeUs, flags, size, offset, cryptoData);
     }
 

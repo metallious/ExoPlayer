@@ -23,6 +23,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 
 /**
@@ -53,9 +54,18 @@ public class ContainerMediaChunk extends BaseMediaChunk {
    * @param sampleOffsetUs An offset to add to the sample timestamps parsed by the extractor.
    * @param extractorWrapper A wrapped extractor to use for parsing the data.
    */
-  public ContainerMediaChunk(DataSource dataSource, DataSpec dataSpec, Format trackFormat,
-      int trackSelectionReason, Object trackSelectionData, long startTimeUs, long endTimeUs,
-      int chunkIndex, int chunkCount, long sampleOffsetUs, ChunkExtractorWrapper extractorWrapper) {
+  public ContainerMediaChunk(
+      DataSource dataSource,
+      DataSpec dataSpec,
+      Format trackFormat,
+      int trackSelectionReason,
+      Object trackSelectionData,
+      long startTimeUs,
+      long endTimeUs,
+      long chunkIndex,
+      int chunkCount,
+      long sampleOffsetUs,
+      ChunkExtractorWrapper extractorWrapper) {
     super(dataSource, dataSpec, trackFormat, trackSelectionReason, trackSelectionData, startTimeUs,
         endTimeUs, chunkIndex);
     this.chunkCount = chunkCount;
@@ -64,7 +74,7 @@ public class ContainerMediaChunk extends BaseMediaChunk {
   }
 
   @Override
-  public int getNextChunkIndex() {
+  public long getNextChunkIndex() {
     return chunkIndex + chunkCount;
   }
 

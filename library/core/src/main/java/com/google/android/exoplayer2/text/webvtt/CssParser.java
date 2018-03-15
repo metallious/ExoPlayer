@@ -16,8 +16,10 @@
 package com.google.android.exoplayer2.text.webvtt;
 
 import android.text.TextUtils;
+
 import com.google.android.exoplayer2.util.ColorParser;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -137,7 +139,7 @@ import java.util.regex.Pattern;
   }
 
   private static void parseStyleDeclaration(ParsableByteArray input, WebvttCssStyle style,
-      StringBuilder stringBuilder) {
+                                            StringBuilder stringBuilder) {
     skipWhitespaceAndComments(input);
     String property = parseIdentifier(input, stringBuilder);
     if ("".equals(property)) {

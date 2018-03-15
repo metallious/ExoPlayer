@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.exoplayer2.suite;
+package com.google.android.exoplayer2.util;
 
 import android.os.SystemClock;
 import android.util.Log;
@@ -30,7 +30,7 @@ import com.google.android.exoplayer2.audio.AudioRendererEventListener;
 import com.google.android.exoplayer2.decoder.DecoderCounters;
 import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
 import com.google.android.exoplayer2.metadata.Metadata;
-import com.google.android.exoplayer2.metadata.MetadataRenderer;
+import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.metadata.emsg.EventMessage;
 import com.google.android.exoplayer2.metadata.id3.ApicFrame;
 import com.google.android.exoplayer2.metadata.id3.CommentFrame;
@@ -39,10 +39,11 @@ import com.google.android.exoplayer2.metadata.id3.Id3Frame;
 import com.google.android.exoplayer2.metadata.id3.PrivFrame;
 import com.google.android.exoplayer2.metadata.id3.TextInformationFrame;
 import com.google.android.exoplayer2.metadata.id3.UrlLinkFrame;
-import com.google.android.exoplayer2.source.AdaptiveMediaSourceEventListener;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.metadata.scte35.SpliceCommand;
+import com.google.android.exoplayer2.source.MediaSourceEventListener;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.ads.AdsMediaSource;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
@@ -54,13 +55,15 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * Logs player events using {@link Log}.
- */
-/* package */ final class EventLogger implements Player.EventListener, AudioRendererEventListener,
-        VideoRendererEventListener, AdaptiveMediaSourceEventListener,
-    ExtractorMediaSource.EventListener, DefaultDrmSessionManager.EventListener,
-    MetadataRenderer.Output {
+/** Logs events from {@link Player} and other core components using {@link Log}. */
+public class EventLogger
+    implements Player.EventListener,
+        MetadataOutput,
+        AudioRendererEventListener,
+        VideoRendererEventListener,
+        MediaSourceEventListener,
+        AdsMediaSource.EventListener,
+        DefaultDrmSessionManager.EventListener {
 
   private static final String TAG = "EventLogger";
   private static final int MAX_TIMELINE_ITEM_LINES = 3;
@@ -104,7 +107,12 @@ import java.util.Locale;
 
   @Override
   public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+    Log.d(TAG, "shuffleModeEnabled [" + shuffleModeEnabled + "]");
+  }
 
+  @Override
+  public void onPositionDiscontinuity(@Player.DiscontinuityReason int reason) {
+    Log.d(TAG, "positionDiscontinuity [" + getDiscontinuityReasonString(reason) + "]");
   }
 
   @Override
@@ -114,15 +122,12 @@ import java.util.Locale;
   }
 
   @Override
-  public void onSeekProcessed() {
-
-  }
-
-  @Override
-  public void onTimelineChanged(Timeline timeline, Object manifest) {
+  public void onTimelineChanged(Timeline timeline, Object manifest,
+                                @Player.TimelineChangeReason int reason) {
     int periodCount = timeline.getPeriodCount();
     int windowCount = timeline.getWindowCount();
-    Log.d(TAG, "sourceInfo [periodCount=" + periodCount + ", windowCount=" + windowCount);
+    Log.d(TAG, "timelineChanged [periodCount=" + periodCount + ", windowCount=" + windowCount
+        + ", reason=" + getTimelineChangeReasonString(reason));
     for (int i = 0; i < Math.min(periodCount, MAX_TIMELINE_ITEM_LINES); i++) {
       timeline.getPeriod(i, period);
       Log.d(TAG, "  " +  "period [" + getTimeString(period.getDurationMs()) + "]");
@@ -144,11 +149,6 @@ import java.util.Locale;
   @Override
   public void onPlayerError(ExoPlaybackException e) {
     Log.e(TAG, "playerFailed [" + getSessionTimeString() + "]", e);
-  }
-
-  @Override
-  public void onPositionDiscontinuity(int reason) {
-
   }
 
   @Override
@@ -217,7 +217,12 @@ import java.util.Locale;
     Log.d(TAG, "]");
   }
 
-  // MetadataRenderer.Output
+  @Override
+  public void onSeekProcessed() {
+    Log.d(TAG, "seekProcessed");
+  }
+
+  // MetadataOutput
 
   @Override
   public void onMetadata(Metadata metadata) {
@@ -251,13 +256,14 @@ import java.util.Locale;
   }
 
   @Override
-  public void onAudioSinkUnderrun(int bufferSize, long bufferSizeMs, long elapsedSinceLastFeedMs) {
-
+  public void onAudioDisabled(DecoderCounters counters) {
+    Log.d(TAG, "audioDisabled [" + getSessionTimeString() + "]");
   }
 
   @Override
-  public void onAudioDisabled(DecoderCounters counters) {
-    Log.d(TAG, "audioDisabled [" + getSessionTimeString() + "]");
+  public void onAudioSinkUnderrun(int bufferSize, long bufferSizeMs, long elapsedSinceLastFeedMs) {
+    printInternalError("audioTrackUnderrun [" + bufferSize + ", " + bufferSizeMs + ", "
+        + elapsedSinceLastFeedMs + "]", null);
   }
 
   // VideoRendererEventListener
@@ -322,20 +328,20 @@ import java.util.Locale;
     Log.d(TAG, "drmKeysLoaded [" + getSessionTimeString() + "]");
   }
 
-  // ExtractorMediaSource.EventListener
+  // MediaSourceEventListener
 
   @Override
-  public void onLoadError(IOException error) {
-    printInternalError("loadError", error);
-  }
-
-  // AdaptiveMediaSourceEventListener
-
-  @Override
-  public void onLoadStarted(DataSpec dataSpec, int dataType, int trackType, Format trackFormat,
-                            int trackSelectionReason, Object trackSelectionData, long mediaStartTimeMs,
-                            long mediaEndTimeMs, long elapsedRealtimeMs) {
-    Log.d(TAG, "onLoadStarted: ");
+  public void onLoadStarted(
+      DataSpec dataSpec,
+      int dataType,
+      int trackType,
+      Format trackFormat,
+      int trackSelectionReason,
+      Object trackSelectionData,
+      long mediaStartTimeMs,
+      long mediaEndTimeMs,
+      long elapsedRealtimeMs) {
+    // Do nothing.
   }
 
   @Override
@@ -350,14 +356,14 @@ import java.util.Locale;
   public void onLoadCanceled(DataSpec dataSpec, int dataType, int trackType, Format trackFormat,
                              int trackSelectionReason, Object trackSelectionData, long mediaStartTimeMs,
                              long mediaEndTimeMs, long elapsedRealtimeMs, long loadDurationMs, long bytesLoaded) {
-    Log.d(TAG, "onLoadCanceled: ");
+    // Do nothing.
   }
 
   @Override
   public void onLoadCompleted(DataSpec dataSpec, int dataType, int trackType, Format trackFormat,
                               int trackSelectionReason, Object trackSelectionData, long mediaStartTimeMs,
                               long mediaEndTimeMs, long elapsedRealtimeMs, long loadDurationMs, long bytesLoaded) {
-    Log.d(TAG, "onLoadCompleted: ");
+    // Do nothing.
   }
 
   @Override
@@ -368,6 +374,28 @@ import java.util.Locale;
   @Override
   public void onDownstreamFormatChanged(int trackType, Format trackFormat, int trackSelectionReason,
                                         Object trackSelectionData, long mediaTimeMs) {
+    // Do nothing.
+  }
+
+  // AdsMediaSource.EventListener
+
+  @Override
+  public void onAdLoadError(IOException error) {
+    printInternalError("adLoadError", error);
+  }
+
+  @Override
+  public void onInternalAdLoadError(RuntimeException error) {
+    printInternalError("internalAdLoadError", error);
+  }
+
+  @Override
+  public void onAdClicked() {
+    // Do nothing.
+  }
+
+  @Override
+  public void onAdTapped() {
     // Do nothing.
   }
 
@@ -409,6 +437,10 @@ import java.util.Locale;
         EventMessage eventMessage = (EventMessage) entry;
         Log.d(TAG, prefix + String.format("EMSG: scheme=%s, id=%d, value=%s",
             eventMessage.schemeIdUri, eventMessage.id, eventMessage.value));
+      } else if (entry instanceof SpliceCommand) {
+        String description =
+            String.format("SCTE-35 splice command: type=%s.", entry.getClass().getSimpleName());
+        Log.d(TAG, prefix + description);
       }
     }
   }
@@ -469,6 +501,9 @@ import java.util.Locale;
     }
   }
 
+  // Suppressing reference equality warning because the track group stored in the track selection
+  // must point to the exact track group object to be considered part of it.
+  @SuppressWarnings("ReferenceEquality")
   private static String getTrackStatusString(TrackSelection selection, TrackGroup group,
                                              int trackIndex) {
     return getTrackStatusString(selection != null && selection.getTrackGroup() == group
@@ -491,4 +526,35 @@ import java.util.Locale;
         return "?";
     }
   }
+
+  private static String getDiscontinuityReasonString(@Player.DiscontinuityReason int reason) {
+    switch (reason) {
+      case Player.DISCONTINUITY_REASON_PERIOD_TRANSITION:
+        return "PERIOD_TRANSITION";
+      case Player.DISCONTINUITY_REASON_SEEK:
+        return "SEEK";
+      case Player.DISCONTINUITY_REASON_SEEK_ADJUSTMENT:
+        return "SEEK_ADJUSTMENT";
+      case Player.DISCONTINUITY_REASON_AD_INSERTION:
+        return "AD_INSERTION";
+      case Player.DISCONTINUITY_REASON_INTERNAL:
+        return "INTERNAL";
+      default:
+        return "?";
+    }
+  }
+
+  private static String getTimelineChangeReasonString(@Player.TimelineChangeReason int reason) {
+    switch (reason) {
+      case Player.TIMELINE_CHANGE_REASON_PREPARED:
+        return "PREPARED";
+      case Player.TIMELINE_CHANGE_REASON_RESET:
+        return "RESET";
+      case Player.TIMELINE_CHANGE_REASON_DYNAMIC:
+        return "DYNAMIC";
+      default:
+        return "?";
+    }
+  }
+
 }

@@ -16,6 +16,7 @@
 package com.google.android.exoplayer2.audio;
 
 import android.annotation.TargetApi;
+
 import com.google.android.exoplayer2.C;
 
 /**
@@ -100,7 +101,7 @@ public final class AudioAttributes {
   private android.media.AudioAttributes audioAttributesV21;
 
   private AudioAttributes(@C.AudioContentType int contentType, @C.AudioFlags int flags,
-      @C.AudioUsage int usage) {
+                          @C.AudioUsage int usage) {
     this.contentType = contentType;
     this.flags = flags;
     this.usage = usage;
