@@ -43,10 +43,6 @@ android {
     }
 }
 
-test {
-    maxHeapSize = "2048m"
-}
-
 dependencies {
     implementation 'com.android.support:support-annotations:' + supportLibraryVersion
     androidTestImplementation 'com.google.dexmaker:dexmaker:' + dexmakerVersion
