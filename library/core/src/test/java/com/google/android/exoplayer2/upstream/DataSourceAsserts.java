@@ -15,11 +15,10 @@
  */
 package com.google.android.exoplayer2.upstream;
 
-import com.google.android.exoplayer2.testutil.TestUtil;
-
-import java.io.IOException;
-
 import static com.google.common.truth.Truth.assertThat;
+
+import com.google.android.exoplayer2.testutil.TestUtil;
+import java.io.IOException;
 
 /**
  * Assertions for data source tests.
@@ -35,7 +34,7 @@ import static com.google.common.truth.Truth.assertThat;
    * @throws IOException If an error occurs reading fom the {@link DataSource}.
    */
   public static void assertDataSourceContent(DataSource dataSource, DataSpec dataSpec,
-                                             byte[] expectedData) throws IOException {
+      byte[] expectedData) throws IOException {
     try {
       long length = dataSource.open(dataSpec);
       assertThat(length).isEqualTo(expectedData.length);

@@ -15,18 +15,16 @@
  */
 package com.google.android.exoplayer2.metadata.id3;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataDecoderException;
 import com.google.android.exoplayer2.util.Assertions;
-
+import java.nio.charset.Charset;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.nio.charset.Charset;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Test for {@link Id3Decoder}.

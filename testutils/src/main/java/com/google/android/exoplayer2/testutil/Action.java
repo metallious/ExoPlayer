@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Surface;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -106,7 +105,7 @@ public abstract class Action {
    * @param surface The surface to use when applying actions.
    */
   protected abstract void doActionImpl(
-          SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface);
+      SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface);
 
   /**
    * Calls {@link Player#seekTo(long)} or {@link Player#seekTo(int, long)}.
@@ -143,7 +142,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       if (windowIndex == null) {
         player.seekTo(positionMs);
       } else {
@@ -185,7 +184,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       if (reset == null) {
         player.stop();
       } else {
@@ -214,7 +213,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.setPlayWhenReady(playWhenReady);
     }
 
@@ -241,7 +240,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       trackSelector.setRendererDisabled(rendererIndex, disabled);
     }
 
@@ -261,7 +260,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.clearVideoSurface();
     }
 
@@ -281,7 +280,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.setVideoSurface(surface);
     }
 
@@ -307,7 +306,7 @@ public abstract class Action {
      * @param tag A tag to use for logging.
      */
     public PrepareSource(String tag, MediaSource mediaSource, boolean resetPosition,
-                         boolean resetState) {
+        boolean resetState) {
       super(tag, "PrepareSource");
       this.mediaSource = mediaSource;
       this.resetPosition = resetPosition;
@@ -316,7 +315,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.prepare(mediaSource, resetPosition, resetState);
     }
 
@@ -339,7 +338,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.setRepeatMode(repeatMode);
     }
 
@@ -362,7 +361,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.setShuffleModeEnabled(shuffleModeEnabled);
     }
   }
@@ -398,7 +397,7 @@ public abstract class Action {
      * @param deleteAfterDelivery Whether the message will be deleted after delivery.
      */
     public SendMessages(
-            String tag, Target target, int windowIndex, long positionMs, boolean deleteAfterDelivery) {
+        String tag, Target target, int windowIndex, long positionMs, boolean deleteAfterDelivery) {
       super(tag, "SendMessages");
       this.target = target;
       this.windowIndex = windowIndex;
@@ -408,7 +407,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(
-            final SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
+        final SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
       if (target instanceof PlayerTarget) {
         ((PlayerTarget) target).setPlayer(player);
       }
@@ -442,7 +441,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       player.setPlaybackParameters(playbackParameters);
     }
 
@@ -464,7 +463,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(
-            SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
+        SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
       player
           .createMessage(
               new Target() {
@@ -535,7 +534,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(
-            SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
+        SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
       // Not triggered.
     }
   }
@@ -568,7 +567,7 @@ public abstract class Action {
       Player.EventListener listener = new Player.DefaultEventListener() {
         @Override
         public void onTimelineChanged(Timeline timeline, Object manifest,
-                                      @Player.TimelineChangeReason int reason) {
+            @Player.TimelineChangeReason int reason) {
           if (timeline.equals(expectedTimeline)) {
             player.removeListener(this);
             nextAction.schedule(player, trackSelector, surface, handler);
@@ -584,7 +583,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       // Not triggered.
     }
 
@@ -623,7 +622,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       // Not triggered.
     }
 
@@ -672,7 +671,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       // Not triggered.
     }
 
@@ -711,7 +710,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       // Not triggered.
     }
 
@@ -734,7 +733,7 @@ public abstract class Action {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       if (runnable instanceof PlayerRunnable) {
         ((PlayerRunnable) runnable).setPlayer(player);
       }

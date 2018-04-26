@@ -15,9 +15,10 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import android.os.HandlerThread;
 import android.support.annotation.Nullable;
-
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
@@ -40,14 +41,11 @@ import com.google.android.exoplayer2.util.Clock;
 import com.google.android.exoplayer2.util.HandlerWrapper;
 import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Helper class to run an ExoPlayer test.
@@ -339,13 +337,10 @@ public final class ExoPlayerTestRunner extends Player.DefaultEventListener
   private final RenderersFactory renderersFactory;
   private final MappingTrackSelector trackSelector;
   private final LoadControl loadControl;
-  private final @Nullable
-  ActionSchedule actionSchedule;
+  private final @Nullable ActionSchedule actionSchedule;
   private final @Nullable Player.EventListener eventListener;
-  private final @Nullable
-  VideoRendererEventListener videoRendererEventListener;
-  private final @Nullable
-  AudioRendererEventListener audioRendererEventListener;
+  private final @Nullable VideoRendererEventListener videoRendererEventListener;
+  private final @Nullable AudioRendererEventListener audioRendererEventListener;
 
   private final HandlerThread playerThread;
   private final HandlerWrapper handler;
@@ -584,7 +579,7 @@ public final class ExoPlayerTestRunner extends Player.DefaultEventListener
 
   @Override
   public void onTimelineChanged(Timeline timeline, Object manifest,
-                                @Player.TimelineChangeReason int reason) {
+      @Player.TimelineChangeReason int reason) {
     timelines.add(timeline);
     manifests.add(manifest);
     timelineChangeReasons.add(reason);

@@ -15,17 +15,15 @@
  */
 package com.google.android.exoplayer2.text.ssa;
 
-import com.google.android.exoplayer2.testutil.TestUtil;
+import static com.google.common.truth.Truth.assertThat;
 
+import com.google.android.exoplayer2.testutil.TestUtil;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /** Unit test for {@link SsaDecoder}. */
 @RunWith(RobolectricTestRunner.class)

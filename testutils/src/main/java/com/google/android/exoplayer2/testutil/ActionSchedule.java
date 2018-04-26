@@ -18,7 +18,6 @@ package com.google.android.exoplayer2.testutil;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.Surface;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -316,7 +315,7 @@ public final class ActionSchedule {
      * @return The builder, for convenience.
      */
     public Builder prepareSource(MediaSource mediaSource, boolean resetPosition,
-                                 boolean resetState) {
+        boolean resetState) {
       return apply(new PrepareSource(tag, mediaSource, resetPosition, resetState));
     }
 
@@ -372,7 +371,7 @@ public final class ActionSchedule {
      * @return The builder, for convenience.
      */
     public Builder sendMessage(
-            Target target, int windowIndex, long positionMs, boolean deleteAfterDelivery) {
+        Target target, int windowIndex, long positionMs, boolean deleteAfterDelivery) {
       return apply(new SendMessages(tag, target, windowIndex, positionMs, deleteAfterDelivery));
     }
 
@@ -581,14 +580,14 @@ public final class ActionSchedule {
 
     @Override
     protected void doActionImpl(SimpleExoPlayer player, MappingTrackSelector trackSelector,
-                                Surface surface) {
+        Surface surface) {
       // Do nothing.
     }
 
   }
 
   /**
-   * An action calling a specified {@link ActionSchedule.Callback}.
+   * An action calling a specified {@link Callback}.
    */
   private static final class CallbackAction extends Action {
 
@@ -623,7 +622,7 @@ public final class ActionSchedule {
 
     @Override
     protected void doActionImpl(
-            SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
+        SimpleExoPlayer player, MappingTrackSelector trackSelector, Surface surface) {
       // Not triggered.
     }
 

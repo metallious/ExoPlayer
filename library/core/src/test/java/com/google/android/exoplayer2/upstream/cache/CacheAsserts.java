@@ -15,8 +15,10 @@
  */
 package com.google.android.exoplayer2.upstream.cache;
 
-import android.net.Uri;
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 
+import android.net.Uri;
 import com.google.android.exoplayer2.testutil.FakeDataSet;
 import com.google.android.exoplayer2.testutil.FakeDataSet.FakeData;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -24,14 +26,10 @@ import com.google.android.exoplayer2.upstream.DataSourceInputStream;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DummyDataSource;
 import com.google.android.exoplayer2.util.Util;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assertWithMessage;
-
-/** Assertion methods for {@link com.google.android.exoplayer2.upstream.cache.Cache}. */
+/** Assertion methods for {@link Cache}. */
 /* package */ final class CacheAsserts {
 
   /**
@@ -109,7 +107,7 @@ import static com.google.common.truth.Truth.assertWithMessage;
    * @throws IOException If an error occurred reading from the Cache.
    */
   public static void assertReadData(
-          DataSource dataSource, DataSpec dataSpec, byte[] expected, String messageToPrepend)
+      DataSource dataSource, DataSpec dataSpec, byte[] expected, String messageToPrepend)
       throws IOException {
     DataSourceInputStream inputStream = new DataSourceInputStream(dataSource, dataSpec);
     byte[] bytes = null;

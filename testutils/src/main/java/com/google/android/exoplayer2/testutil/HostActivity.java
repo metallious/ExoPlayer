@@ -15,6 +15,8 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static org.junit.Assert.fail;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.WifiManager;
@@ -28,11 +30,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
-
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
-
-import static org.junit.Assert.fail;
 
 /**
  * A host activity for performing playback tests.

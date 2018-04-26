@@ -15,6 +15,9 @@
  */
 package com.google.android.exoplayer2.source;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Timeline;
@@ -27,17 +30,12 @@ import com.google.android.exoplayer2.testutil.FakeTimeline.TimelineWindowDefinit
 import com.google.android.exoplayer2.testutil.MediaSourceTestRunner;
 import com.google.android.exoplayer2.testutil.RobolectricUtil;
 import com.google.android.exoplayer2.testutil.TimelineAsserts;
-
+import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
-import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
 
 /** Unit tests for {@link ClippingMediaSource}. */
 @RunWith(RobolectricTestRunner.class)
@@ -52,8 +50,8 @@ public final class ClippingMediaSourceTest {
 
   @Before
   public void setUp() throws Exception {
-    window = new Timeline.Window();
-    period = new Timeline.Period();
+    window = new Window();
+    period = new Period();
   }
 
   @Test

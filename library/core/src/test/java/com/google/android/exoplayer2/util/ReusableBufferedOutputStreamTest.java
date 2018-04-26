@@ -15,13 +15,12 @@
  */
 package com.google.android.exoplayer2.util;
 
+import static com.google.common.truth.Truth.assertThat;
+
+import java.io.ByteArrayOutputStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.io.ByteArrayOutputStream;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests {@link ReusableBufferedOutputStream}.

@@ -15,18 +15,16 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import android.content.Context;
 import android.util.SparseArray;
-
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
 import com.google.android.exoplayer2.extractor.SeekMap;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import static com.google.common.truth.Truth.assertThat;
-import static com.google.common.truth.Truth.assertWithMessage;
 
 /**
  * A fake {@link ExtractorOutput}.

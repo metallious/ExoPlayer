@@ -33,7 +33,7 @@ public final class AutoAdvancingFakeClock extends FakeClock {
 
   @Override
   protected synchronized boolean addHandlerMessageAtTime(
-          HandlerWrapper handler, int message, long timeMs) {
+      HandlerWrapper handler, int message, long timeMs) {
     boolean result = super.addHandlerMessageAtTime(handler, message, timeMs);
     if (autoAdvancingHandler == null || autoAdvancingHandler == handler) {
       autoAdvancingHandler = handler;

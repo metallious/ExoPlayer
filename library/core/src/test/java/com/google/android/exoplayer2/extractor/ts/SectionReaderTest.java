@@ -15,23 +15,21 @@
  */
 package com.google.android.exoplayer2.extractor.ts;
 
+import static com.google.common.truth.Truth.assertThat;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
 import com.google.android.exoplayer2.testutil.FakeExtractorOutput;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 
 /**
  * Test for {@link SectionReader}.
@@ -196,7 +194,7 @@ public final class SectionReaderTest {
 
     @Override
     public void init(TimestampAdjuster timestampAdjuster, ExtractorOutput extractorOutput,
-                     TsPayloadReader.TrackIdGenerator idGenerator) {
+        TsPayloadReader.TrackIdGenerator idGenerator) {
       parsedTableIds = new ArrayList<>();
     }
 

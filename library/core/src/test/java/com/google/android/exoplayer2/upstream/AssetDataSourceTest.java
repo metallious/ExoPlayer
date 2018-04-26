@@ -16,9 +16,7 @@
 package com.google.android.exoplayer2.upstream;
 
 import android.net.Uri;
-
 import com.google.android.exoplayer2.testutil.TestUtil;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;

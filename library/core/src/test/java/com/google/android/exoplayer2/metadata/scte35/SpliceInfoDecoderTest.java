@@ -15,21 +15,19 @@
  */
 package com.google.android.exoplayer2.metadata.scte35;
 
+import static com.google.android.exoplayer2.C.TIME_UNSET;
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataDecoderException;
 import com.google.android.exoplayer2.metadata.MetadataInputBuffer;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
-
+import java.nio.ByteBuffer;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.nio.ByteBuffer;
-import java.util.List;
-
-import static com.google.android.exoplayer2.C.TIME_UNSET;
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Test for {@link SpliceInfoDecoder}.
@@ -168,7 +166,7 @@ public final class SpliceInfoDecoderTest {
   }
 
   private Metadata feedInputBuffer(byte[] data, long timeUs, long subsampleOffset)
-      throws MetadataDecoderException {
+      throws MetadataDecoderException{
     inputBuffer.clear();
     inputBuffer.data = ByteBuffer.allocate(data.length).put(data);
     inputBuffer.timeUs = timeUs;

@@ -15,9 +15,12 @@
  */
 package com.google.android.exoplayer2.upstream.cache;
 
+import static com.google.common.truth.Truth.assertThat;
+import static java.util.Arrays.copyOf;
+import static java.util.Arrays.copyOfRange;
+
 import android.content.Context;
 import android.net.Uri;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.testutil.FakeDataSource;
 import com.google.android.exoplayer2.testutil.TestUtil;
@@ -29,19 +32,13 @@ import com.google.android.exoplayer2.upstream.cache.Cache.CacheException;
 import com.google.android.exoplayer2.upstream.crypto.AesCipherDataSink;
 import com.google.android.exoplayer2.upstream.crypto.AesCipherDataSource;
 import com.google.android.exoplayer2.util.Util;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Random;
-
-import static com.google.common.truth.Truth.assertThat;
-import static java.util.Arrays.copyOf;
-import static java.util.Arrays.copyOfRange;
 
 /**
  * Additional tests for {@link CacheDataSource}.
@@ -157,7 +154,7 @@ public final class CacheDataSourceTest2 {
   }
 
   private static CacheDataSource buildCacheDataSource(Context context, DataSource upstreamSource,
-                                                      boolean useAesEncryption) throws CacheException {
+      boolean useAesEncryption) throws CacheException {
     File cacheDir = context.getExternalCacheDir();
     Cache cache = new SimpleCache(new File(cacheDir, EXO_CACHE_DIR), new NoOpCacheEvictor());
     emptyCache(cache);

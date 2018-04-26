@@ -15,18 +15,16 @@
  */
 package com.google.android.exoplayer2.source;
 
-import android.util.Pair;
+import static com.google.common.truth.Truth.assertThat;
 
+import android.util.Pair;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Timeline.Period;
 import com.google.android.exoplayer2.Timeline.Window;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link SinglePeriodTimeline}.

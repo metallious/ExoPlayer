@@ -15,6 +15,9 @@
  */
 package com.google.android.exoplayer2.text.webvtt;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import android.graphics.Typeface;
 import android.text.Layout.Alignment;
 import android.text.Spanned;
@@ -23,21 +26,15 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
-
 import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.text.SubtitleDecoderException;
-
+import java.io.IOException;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import java.io.IOException;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
 
 /** Unit test for {@link WebvttDecoder}. */
 @RunWith(RobolectricTestRunner.class)
@@ -300,7 +297,7 @@ public class WebvttDecoderTest {
   }
 
   private static void assertCue(
-          WebvttSubtitle subtitle, int eventTimeIndex, long startTimeUs, int endTimeUs, String text) {
+      WebvttSubtitle subtitle, int eventTimeIndex, long startTimeUs, int endTimeUs, String text) {
     assertCue(
         subtitle,
         eventTimeIndex,

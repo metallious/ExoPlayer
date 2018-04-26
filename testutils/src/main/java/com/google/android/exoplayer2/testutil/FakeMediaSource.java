@@ -15,9 +15,10 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import android.os.Handler;
 import android.support.annotation.Nullable;
-
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.Timeline;
@@ -27,12 +28,9 @@ import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.util.Assertions;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Fake {@link MediaSource} that provides a given timeline. Creating the period will return a
@@ -68,7 +66,7 @@ public class FakeMediaSource implements MediaSource {
    * later using {@link #setNewSourceInfo(Timeline, Object)}.
    */
   public FakeMediaSource(@Nullable Timeline timeline, Object manifest,
-                         TrackGroupArray trackGroupArray) {
+      TrackGroupArray trackGroupArray) {
     this.timeline = timeline;
     this.manifest = manifest;
     this.activeMediaPeriods = new ArrayList<>();
@@ -78,7 +76,7 @@ public class FakeMediaSource implements MediaSource {
 
   @Override
   public synchronized void prepareSource(
-          ExoPlayer player, boolean isTopLevelSource, Listener listener) {
+      ExoPlayer player, boolean isTopLevelSource, Listener listener) {
     assertThat(preparedSource).isFalse();
     preparedSource = true;
     releasedSource = false;
@@ -169,7 +167,7 @@ public class FakeMediaSource implements MediaSource {
   }
 
   protected FakeMediaPeriod createFakeMediaPeriod(MediaPeriodId id, TrackGroupArray trackGroupArray,
-                                                  Allocator allocator) {
+      Allocator allocator) {
     return new FakeMediaPeriod(trackGroupArray);
   }
 

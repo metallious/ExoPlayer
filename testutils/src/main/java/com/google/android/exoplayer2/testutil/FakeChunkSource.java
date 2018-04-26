@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2.testutil;
 
 import android.net.Uri;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.SeekParameters;
@@ -31,7 +30,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -69,7 +67,7 @@ public final class FakeChunkSource implements ChunkSource {
   private final FakeAdaptiveDataSet dataSet;
 
   public FakeChunkSource(TrackSelection trackSelection, DataSource dataSource,
-                         FakeAdaptiveDataSet dataSet) {
+      FakeAdaptiveDataSet dataSet) {
     this.trackSelection = trackSelection;
     this.dataSource = dataSource;
     this.dataSet = dataSet;
@@ -98,7 +96,7 @@ public final class FakeChunkSource implements ChunkSource {
 
   @Override
   public void getNextChunk(MediaChunk previous, long playbackPositionUs, long loadPositionUs,
-                           ChunkHolder out) {
+      ChunkHolder out) {
     long bufferedDurationUs = loadPositionUs - playbackPositionUs;
     trackSelection.updateSelectedTrack(playbackPositionUs, bufferedDurationUs, C.TIME_UNSET);
     int chunkIndex =

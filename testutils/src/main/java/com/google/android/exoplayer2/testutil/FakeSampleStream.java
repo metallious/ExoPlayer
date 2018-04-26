@@ -20,7 +20,6 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.FormatHolder;
 import com.google.android.exoplayer2.decoder.DecoderInputBuffer;
 import com.google.android.exoplayer2.source.SampleStream;
-
 import java.io.IOException;
 
 /**
@@ -50,7 +49,7 @@ public final class FakeSampleStream implements SampleStream {
 
   @Override
   public int readData(FormatHolder formatHolder, DecoderInputBuffer buffer,
-                      boolean formatRequired) {
+      boolean formatRequired) {
     if (formatRequired || !readFormat) {
       formatHolder.format = format;
       readFormat = true;

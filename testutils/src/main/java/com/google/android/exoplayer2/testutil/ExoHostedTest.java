@@ -15,12 +15,13 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import android.os.ConditionVariable;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Surface;
-
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -48,13 +49,11 @@ import com.google.android.exoplayer2.util.HandlerWrapper;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
 
-import static com.google.common.truth.Truth.assertWithMessage;
-
 /**
  * A {@link HostedTest} for {@link ExoPlayer} playback tests.
  */
 public abstract class ExoHostedTest extends Player.DefaultEventListener implements HostedTest,
-        AudioRendererEventListener, VideoRendererEventListener {
+    AudioRendererEventListener, VideoRendererEventListener {
 
   static {
     // DefaultAudioSink is able to work around spurious timestamps reported by the platform (by
@@ -361,14 +360,14 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
 
   @SuppressWarnings("unused")
   protected MappingTrackSelector buildTrackSelector(HostActivity host,
-                                                    BandwidthMeter bandwidthMeter) {
+      BandwidthMeter bandwidthMeter) {
     return new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
   }
 
   @SuppressWarnings("unused")
   protected SimpleExoPlayer buildExoPlayer(HostActivity host, Surface surface,
-                                           MappingTrackSelector trackSelector,
-                                           DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
+      MappingTrackSelector trackSelector,
+      DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(host, drmSessionManager,
         DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF, 0);
     SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector);
@@ -378,7 +377,7 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
 
   @SuppressWarnings("unused")
   protected abstract MediaSource buildSource(HostActivity host, String userAgent,
-                                             TransferListener<? super DataSource> mediaTransferListener);
+      TransferListener<? super DataSource> mediaTransferListener);
 
   @SuppressWarnings("unused")
   protected void onPlayerErrorInternal(ExoPlaybackException error) {

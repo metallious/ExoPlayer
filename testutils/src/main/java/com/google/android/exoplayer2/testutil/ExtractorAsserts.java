@@ -15,8 +15,9 @@
  */
 package com.google.android.exoplayer2.testutil;
 
-import android.content.Context;
+import static com.google.common.truth.Truth.assertThat;
 
+import android.content.Context;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.extractor.Extractor;
 import com.google.android.exoplayer2.extractor.ExtractorInput;
@@ -25,12 +26,9 @@ import com.google.android.exoplayer2.extractor.PositionHolder;
 import com.google.android.exoplayer2.extractor.SeekMap;
 import com.google.android.exoplayer2.testutil.FakeExtractorInput.SimulatedIOException;
 import com.google.android.exoplayer2.util.Assertions;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Assertion methods for {@link Extractor}.
@@ -298,7 +296,7 @@ public final class ExtractorAsserts {
   private ExtractorAsserts() {}
 
   private static FakeExtractorOutput consumeTestData(Extractor extractor, FakeExtractorInput input,
-                                                     long timeUs, boolean retryFromStartIfLive) throws IOException, InterruptedException {
+      long timeUs, boolean retryFromStartIfLive) throws IOException, InterruptedException {
     FakeExtractorOutput output = new FakeExtractorOutput();
     extractor.init(output);
     consumeTestData(extractor, input, timeUs, output, retryFromStartIfLive);
@@ -306,7 +304,7 @@ public final class ExtractorAsserts {
   }
 
   private static void consumeTestData(Extractor extractor, FakeExtractorInput input, long timeUs,
-                                      FakeExtractorOutput output, boolean retryFromStartIfLive)
+      FakeExtractorOutput output, boolean retryFromStartIfLive)
       throws IOException, InterruptedException {
     extractor.seek(input.getPosition(), timeUs);
     PositionHolder seekPositionHolder = new PositionHolder();

@@ -16,12 +16,10 @@
 package com.google.android.exoplayer2.testutil;
 
 import android.util.Pair;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ads.AdPlaybackState;
 import com.google.android.exoplayer2.util.Util;
-
 import java.util.Arrays;
 
 /**
@@ -175,7 +173,7 @@ public final class FakeTimeline extends Timeline {
 
   @Override
   public Window getWindow(int windowIndex, Window window, boolean setIds,
-                          long defaultPositionProjectionUs) {
+      long defaultPositionProjectionUs) {
     TimelineWindowDefinition windowDefinition = windowDefinitions[windowIndex];
     Object id = setIds ? windowDefinition.id : null;
     return window.set(id, C.TIME_UNSET, C.TIME_UNSET, windowDefinition.isSeekable,

@@ -15,14 +15,13 @@
  */
 package com.google.android.exoplayer2.extractor.mp4;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests for {@link AtomParsers}.

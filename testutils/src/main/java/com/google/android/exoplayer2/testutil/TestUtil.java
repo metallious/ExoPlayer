@@ -15,8 +15,10 @@
  */
 package com.google.android.exoplayer2.testutil;
 
-import android.content.Context;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
+import android.content.Context;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.extractor.Extractor;
 import com.google.android.exoplayer2.testutil.FakeExtractorInput.SimulatedIOException;
@@ -24,9 +26,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.Util;
-
-import junit.framework.Assert;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -72,7 +71,7 @@ public class TestUtil {
     while (position < length) {
       int bytesRead = dataSource.read(data, position, data.length - position);
       if (bytesRead == C.RESULT_END_OF_INPUT) {
-        Assert.fail("Not enough data could be read: " + position + " < " + length);
+        fail("Not enough data could be read: " + position + " < " + length);
       } else {
         position += bytesRead;
       }
@@ -155,13 +154,13 @@ public class TestUtil {
    * @throws IOException If an error occurs reading fom the {@link DataSource}.
    */
   public static void assertDataSourceContent(
-          DataSource dataSource, DataSpec dataSpec, byte[] expectedData, boolean expectKnownLength)
+      DataSource dataSource, DataSpec dataSpec, byte[] expectedData, boolean expectKnownLength)
       throws IOException {
     try {
       long length = dataSource.open(dataSpec);
-      Assert.assertEquals(length, expectKnownLength ? expectedData.length : C.LENGTH_UNSET);
+      assertThat(length).isEqualTo(expectKnownLength ? expectedData.length : C.LENGTH_UNSET);
       byte[] readData = readToEnd(dataSource);
-      Assert.assertEquals(readData, expectedData);
+      assertThat(readData).isEqualTo(expectedData);
     } finally {
       dataSource.close();
     }

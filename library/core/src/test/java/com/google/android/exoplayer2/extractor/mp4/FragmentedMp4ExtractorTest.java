@@ -20,13 +20,11 @@ import com.google.android.exoplayer2.extractor.Extractor;
 import com.google.android.exoplayer2.testutil.ExtractorAsserts;
 import com.google.android.exoplayer2.testutil.ExtractorAsserts.ExtractorFactory;
 import com.google.android.exoplayer2.util.MimeTypes;
-
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.util.Collections;
-import java.util.List;
 
 /** Unit test for {@link FragmentedMp4Extractor}. */
 @RunWith(RobolectricTestRunner.class)

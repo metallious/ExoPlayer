@@ -15,8 +15,9 @@
  */
 package com.google.android.exoplayer2.extractor.ts;
 
-import android.util.SparseArray;
+import static com.google.common.truth.Truth.assertThat;
 
+import android.util.SparseArray;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.Extractor;
@@ -33,16 +34,12 @@ import com.google.android.exoplayer2.testutil.FakeTrackOutput;
 import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
-
+import java.io.ByteArrayOutputStream;
+import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Random;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /** Unit test for {@link TsExtractor}. */
 @RunWith(RobolectricTestRunner.class)

@@ -1,5 +1,13 @@
 package com.google.android.exoplayer2.trackselection;
 
+import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_EXCEEDS_CAPABILITIES;
+import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_HANDLED;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
@@ -10,23 +18,13 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector.Paramet
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector.ParametersBuilder;
 import com.google.android.exoplayer2.trackselection.TrackSelector.InvalidationListener;
 import com.google.android.exoplayer2.util.MimeTypes;
-
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_EXCEEDS_CAPABILITIES;
-import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_HANDLED;
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Unit tests for {@link DefaultTrackSelector}.
@@ -663,7 +661,7 @@ public final class DefaultTrackSelectorTest {
    * {@link Parameters#selectUndeterminedTextLanguage} is true.
    */
   @Test
-  public void testSelectUndeterminedTextLanguageAsFallback() throws ExoPlaybackException {
+  public void testSelectUndeterminedTextLanguageAsFallback() throws ExoPlaybackException{
     Format spanish = Format.createTextContainerFormat("spanish", null,
         MimeTypes.TEXT_VTT, null, Format.NO_VALUE, 0, "spa");
     Format german = Format.createTextContainerFormat("german", null,

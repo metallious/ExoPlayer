@@ -15,20 +15,17 @@
  */
 package com.google.android.exoplayer2.upstream.crypto;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.util.Util;
-
+import java.util.Random;
+import javax.crypto.Cipher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import java.util.Random;
-
-import javax.crypto.Cipher;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit tests for {@link AesFlushingCipher}.

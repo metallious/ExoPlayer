@@ -15,13 +15,12 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
-import com.google.android.exoplayer2.testutil.TestUtil;
+import static com.google.common.truth.Truth.assertThat;
 
+import com.google.android.exoplayer2.testutil.TestUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link VorbisBitArray}.

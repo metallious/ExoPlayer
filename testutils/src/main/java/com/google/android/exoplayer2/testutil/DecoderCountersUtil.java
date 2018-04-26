@@ -15,9 +15,9 @@
  */
 package com.google.android.exoplayer2.testutil;
 
-import com.google.android.exoplayer2.decoder.DecoderCounters;
-
 import static com.google.common.truth.Truth.assertWithMessage;
+
+import com.google.android.exoplayer2.decoder.DecoderCounters;
 
 /**
  * Assertions for {@link DecoderCounters}.
@@ -49,7 +49,7 @@ public final class DecoderCountersUtil {
   }
 
   public static void assertTotalBufferCount(String name, DecoderCounters counters, int minCount,
-                                            int maxCount) {
+      int maxCount) {
     int actual = getTotalBufferCount(counters);
     assertWithMessage(
             "Codec("

@@ -15,15 +15,6 @@
  */
 package com.google.android.exoplayer2.text.ttml;
 
-import android.graphics.Color;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.YELLOW;
@@ -31,6 +22,13 @@ import static com.google.android.exoplayer2.text.ttml.TtmlRenderUtil.resolveStyl
 import static com.google.android.exoplayer2.text.ttml.TtmlStyle.STYLE_BOLD;
 import static com.google.android.exoplayer2.text.ttml.TtmlStyle.STYLE_BOLD_ITALIC;
 import static com.google.common.truth.Truth.assertThat;
+
+import android.graphics.Color;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 /**
  * Unit test for {@link TtmlRenderUtil}.

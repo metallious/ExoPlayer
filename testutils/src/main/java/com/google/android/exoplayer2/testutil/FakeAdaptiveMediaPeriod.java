@@ -25,13 +25,12 @@ import com.google.android.exoplayer2.source.chunk.ChunkSampleStream;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.util.MimeTypes;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Fake {@link MediaPeriod} that provides tracks from the given {@link TrackGroupArray}. Selecting a
- * track will give the player a {@link ChunkSampleStream < FakeChunkSource >}.
+ * track will give the player a {@link ChunkSampleStream<FakeChunkSource>}.
  */
 public class FakeAdaptiveMediaPeriod extends FakeMediaPeriod
     implements SequenceableLoader.Callback<ChunkSampleStream<FakeChunkSource>> {
@@ -75,7 +74,7 @@ public class FakeAdaptiveMediaPeriod extends FakeMediaPeriod
 
   @Override
   public long selectTracks(TrackSelection[] selections, boolean[] mayRetainStreamFlags,
-                           SampleStream[] streams, boolean[] streamResetFlags, long positionUs) {
+      SampleStream[] streams, boolean[] streamResetFlags, long positionUs) {
     long returnPositionUs = super.selectTracks(selections, mayRetainStreamFlags, streams,
         streamResetFlags, positionUs);
     List<ChunkSampleStream<FakeChunkSource>> validStreams = new ArrayList<>();

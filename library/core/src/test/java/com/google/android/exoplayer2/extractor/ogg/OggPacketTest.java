@@ -15,22 +15,20 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.testutil.FakeExtractorInput;
 import com.google.android.exoplayer2.testutil.OggTestData;
 import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.util.ParsableByteArray;
-
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /** Unit test for {@link OggPacket}. */
 @RunWith(RobolectricTestRunner.class)

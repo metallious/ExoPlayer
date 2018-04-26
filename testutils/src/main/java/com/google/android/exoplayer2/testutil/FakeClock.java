@@ -18,10 +18,8 @@ package com.google.android.exoplayer2.testutil;
 import android.os.Handler.Callback;
 import android.os.Looper;
 import android.os.Message;
-
 import com.google.android.exoplayer2.util.Clock;
 import com.google.android.exoplayer2.util.HandlerWrapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +96,7 @@ public class FakeClock implements Clock {
 
   /** Adds a handler post to list of pending messages. */
   protected synchronized boolean addHandlerMessageAtTime(
-          HandlerWrapper handler, Runnable runnable, long timeMs) {
+      HandlerWrapper handler, Runnable runnable, long timeMs) {
     if (timeMs <= currentTimeMs) {
       return handler.post(runnable);
     }
@@ -108,7 +106,7 @@ public class FakeClock implements Clock {
 
   /** Adds an empty handler message to list of pending messages. */
   protected synchronized boolean addHandlerMessageAtTime(
-          HandlerWrapper handler, int message, long timeMs) {
+      HandlerWrapper handler, int message, long timeMs) {
     if (timeMs <= currentTimeMs) {
       return handler.sendEmptyMessage(message);
     }

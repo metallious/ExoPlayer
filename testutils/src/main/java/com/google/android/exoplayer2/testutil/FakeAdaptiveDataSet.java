@@ -18,7 +18,6 @@ package com.google.android.exoplayer2.testutil;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.source.TrackGroup;
-
 import java.util.Random;
 
 /**
@@ -80,7 +79,7 @@ public final class FakeAdaptiveDataSet extends FakeDataSet {
    * @param random A {@link Random} instance used to generate random chunk sizes.
    */
   /* package */ FakeAdaptiveDataSet(TrackGroup trackGroup, long mediaDurationUs,
-                                    long chunkDurationUs, double bitratePercentStdDev, Random random) {
+      long chunkDurationUs, double bitratePercentStdDev, Random random) {
     this.chunkDurationUs = chunkDurationUs;
     long lastChunkDurationUs = mediaDurationUs % chunkDurationUs;
     int fullChunks = (int) (mediaDurationUs / chunkDurationUs);

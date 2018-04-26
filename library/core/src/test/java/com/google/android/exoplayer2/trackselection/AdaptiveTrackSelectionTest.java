@@ -15,8 +15,11 @@
  */
 package com.google.android.exoplayer2.trackselection;
 
-import android.net.Uri;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
+import android.net.Uri;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.source.TrackGroup;
@@ -27,20 +30,14 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.util.MimeTypes;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RobolectricTestRunner;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 /** Unit test for {@link AdaptiveTrackSelection}. */
 @RunWith(RobolectricTestRunner.class)
@@ -313,7 +310,7 @@ public final class AdaptiveTrackSelectionTest {
   }
 
   private AdaptiveTrackSelection adaptiveTrackSelectionWithMinDurationForQualityIncreaseMs(
-          TrackGroup trackGroup, int initialBitrate, long minDurationForQualityIncreaseMs) {
+      TrackGroup trackGroup, int initialBitrate, long minDurationForQualityIncreaseMs) {
     return new AdaptiveTrackSelection(
         trackGroup,
         selectedAllTracksInGroup(trackGroup),
@@ -329,7 +326,7 @@ public final class AdaptiveTrackSelectionTest {
   }
 
   private AdaptiveTrackSelection adaptiveTrackSelectionWithMaxDurationForQualityDecreaseMs(
-          TrackGroup trackGroup, int initialBitrate, long maxDurationForQualityDecreaseMs) {
+      TrackGroup trackGroup, int initialBitrate, long maxDurationForQualityDecreaseMs) {
     return new AdaptiveTrackSelection(
         trackGroup,
         selectedAllTracksInGroup(trackGroup),

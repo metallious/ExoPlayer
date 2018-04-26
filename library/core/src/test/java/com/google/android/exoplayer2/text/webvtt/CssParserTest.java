@@ -15,16 +15,15 @@
  */
 package com.google.android.exoplayer2.text.webvtt;
 
+import static com.google.android.exoplayer2.text.webvtt.CssParser.parseNextToken;
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static com.google.android.exoplayer2.text.webvtt.CssParser.parseNextToken;
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link CssParser}.

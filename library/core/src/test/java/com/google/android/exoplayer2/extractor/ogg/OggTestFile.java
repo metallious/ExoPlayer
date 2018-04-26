@@ -15,13 +15,12 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
+import static org.junit.Assert.fail;
+
 import com.google.android.exoplayer2.testutil.OggTestData;
 import com.google.android.exoplayer2.testutil.TestUtil;
-
 import java.util.ArrayList;
 import java.util.Random;
-
-import static org.junit.Assert.fail;
 
 /** Generates test data. */
 /* package */ final class OggTestFile {

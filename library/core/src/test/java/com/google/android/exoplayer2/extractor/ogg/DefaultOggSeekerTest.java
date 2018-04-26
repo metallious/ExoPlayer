@@ -15,20 +15,18 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.testutil.FakeExtractorInput;
-import com.google.android.exoplayer2.util.ParsableByteArray;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import java.io.IOException;
-import java.util.Random;
-
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.Assert.fail;
+
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.testutil.FakeExtractorInput;
+import com.google.android.exoplayer2.util.ParsableByteArray;
+import java.io.IOException;
+import java.util.Random;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 /** Unit test for {@link DefaultOggSeeker}. */
 @RunWith(RobolectricTestRunner.class)
@@ -141,7 +139,7 @@ public final class DefaultOggSeekerTest {
   }
 
   private long seekTo(
-          FakeExtractorInput input, DefaultOggSeeker oggSeeker, long targetGranule, int initialPosition)
+      FakeExtractorInput input, DefaultOggSeeker oggSeeker, long targetGranule, int initialPosition)
       throws IOException, InterruptedException {
     long nextSeekPosition = initialPosition;
     int count = 0;

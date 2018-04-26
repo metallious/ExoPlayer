@@ -15,8 +15,10 @@
  */
 package com.google.android.exoplayer2;
 
-import android.view.Surface;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
+import android.view.Surface;
 import com.google.android.exoplayer2.Player.DefaultEventListener;
 import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.Timeline.Window;
@@ -42,21 +44,16 @@ import com.google.android.exoplayer2.testutil.FakeTrackSelection;
 import com.google.android.exoplayer2.testutil.FakeTrackSelector;
 import com.google.android.exoplayer2.testutil.RobolectricUtil;
 import com.google.android.exoplayer2.upstream.Allocator;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 /** Unit test for {@link ExoPlayer}. */
 @RunWith(RobolectricTestRunner.class)
@@ -232,7 +229,7 @@ public final class ExoPlayerTest {
         new FakeMediaSource(timeline, new Object(), Builder.VIDEO_FORMAT) {
           @Override
           public synchronized void prepareSource(
-                  ExoPlayer player, boolean isTopLevelSource, Listener listener) {
+              ExoPlayer player, boolean isTopLevelSource, Listener listener) {
             super.prepareSource(player, isTopLevelSource, listener);
             // We've queued a source info refresh on the playback thread's event queue. Allow the
             // test thread to prepare the player with the third source, and block this thread (the
@@ -323,7 +320,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setRenderers(renderer)
             .setActionSchedule(actionSchedule)
@@ -370,7 +367,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .setRenderers(renderer)
             .setActionSchedule(actionSchedule)
@@ -428,7 +425,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(fakeMediaSource)
             .setActionSchedule(actionSchedule)
             .build()
@@ -499,7 +496,7 @@ public final class ExoPlayerTest {
           }
         };
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setEventListener(eventListener)
             .setActionSchedule(actionSchedule)
@@ -560,7 +557,7 @@ public final class ExoPlayerTest {
     ActionSchedule actionSchedule =
         new ActionSchedule.Builder("testSeekDiscontinuity").seek(10).build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -576,7 +573,7 @@ public final class ExoPlayerTest {
         new FakeMediaSource(timeline, null, Builder.VIDEO_FORMAT) {
           @Override
           protected FakeMediaPeriod createFakeMediaPeriod(
-                  MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
+              MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
             FakeMediaPeriod mediaPeriod = new FakeMediaPeriod(trackGroupArray);
             mediaPeriod.setSeekToUsOffset(10);
             return mediaPeriod;
@@ -590,7 +587,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .setActionSchedule(actionSchedule)
             .build()
@@ -607,14 +604,14 @@ public final class ExoPlayerTest {
         new FakeMediaSource(timeline, null, Builder.VIDEO_FORMAT) {
           @Override
           protected FakeMediaPeriod createFakeMediaPeriod(
-                  MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
+              MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
             FakeMediaPeriod mediaPeriod = new FakeMediaPeriod(trackGroupArray);
             mediaPeriod.setDiscontinuityPositionUs(10);
             return mediaPeriod;
           }
         };
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .build()
             .start()
@@ -629,14 +626,14 @@ public final class ExoPlayerTest {
         new FakeMediaSource(timeline, null, Builder.VIDEO_FORMAT) {
           @Override
           protected FakeMediaPeriod createFakeMediaPeriod(
-                  MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
+              MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
             FakeMediaPeriod mediaPeriod = new FakeMediaPeriod(trackGroupArray);
             mediaPeriod.setDiscontinuityPositionUs(0);
             return mediaPeriod;
           }
         };
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .build()
             .start()
@@ -821,7 +818,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .setActionSchedule(actionSchedule)
             .build()
@@ -862,7 +859,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(firstMediaSource)
             .setActionSchedule(actionSchedule)
             .build()
@@ -881,7 +878,7 @@ public final class ExoPlayerTest {
         new FakeMediaSource(new FakeTimeline(/* windowCount= */ 1), null, Builder.VIDEO_FORMAT) {
           @Override
           protected FakeMediaPeriod createFakeMediaPeriod(
-                  MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
+              MediaPeriodId id, TrackGroupArray trackGroupArray, Allocator allocator) {
             // Defer completing preparation of the period until playback parameters have been set.
             fakeMediaPeriodHolder[0] =
                 new FakeMediaPeriod(trackGroupArray, /* deferOnPrepared= */ true);
@@ -915,7 +912,7 @@ public final class ExoPlayerTest {
                   }
                 })
             .build();
-    new ExoPlayerTestRunner.Builder()
+    new Builder()
         .setMediaSource(mediaSource)
         .setActionSchedule(actionSchedule)
         .build()
@@ -942,7 +939,7 @@ public final class ExoPlayerTest {
                 })
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -974,7 +971,7 @@ public final class ExoPlayerTest {
                 })
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1006,7 +1003,7 @@ public final class ExoPlayerTest {
                 })
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1031,7 +1028,7 @@ public final class ExoPlayerTest {
             .stop(/* reset= */ false)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1052,7 +1049,7 @@ public final class ExoPlayerTest {
             .stop(/* reset= */ true)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1074,7 +1071,7 @@ public final class ExoPlayerTest {
             .prepareSource(secondSource)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .setExpectedPlayerEndedCount(2)
@@ -1104,7 +1101,7 @@ public final class ExoPlayerTest {
             .prepareSource(secondSource, /* resetPosition= */ false, /* resetState= */ true)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .setExpectedPlayerEndedCount(2)
@@ -1131,7 +1128,7 @@ public final class ExoPlayerTest {
             .waitForSeekProcessed()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1157,7 +1154,7 @@ public final class ExoPlayerTest {
             .waitForSeekProcessed()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build()
@@ -1184,7 +1181,7 @@ public final class ExoPlayerTest {
             .waitForPlaybackState(Player.STATE_READY)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build();
@@ -1233,7 +1230,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build();
@@ -1273,7 +1270,7 @@ public final class ExoPlayerTest {
             .waitForPlaybackState(Player.STATE_IDLE)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .setActionSchedule(actionSchedule)
             .build();
@@ -1335,7 +1332,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build();
@@ -1370,7 +1367,7 @@ public final class ExoPlayerTest {
             .waitForPlaybackState(Player.STATE_IDLE)
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setTimeline(timeline)
             .setActionSchedule(actionSchedule)
             .build();
@@ -1811,7 +1808,7 @@ public final class ExoPlayerTest {
             .seek(/* windowIndex= */ 2, /* positionMs= */ 0)
             .play()
             .build();
-    new ExoPlayerTestRunner.Builder()
+    new Builder()
         .setMediaSource(mediaSource)
         .setActionSchedule(actionSchedule)
         .build()
@@ -1835,7 +1832,7 @@ public final class ExoPlayerTest {
         };
     ActionSchedule actionSchedule =
         addSurfaceSwitch(new ActionSchedule.Builder("testSetAndSwitchSurface")).build();
-    new ExoPlayerTestRunner.Builder()
+    new Builder()
         .setRenderers(videoRenderer)
         .setActionSchedule(actionSchedule)
         .build()
@@ -1851,7 +1848,7 @@ public final class ExoPlayerTest {
         new ActionSchedule.Builder("testSwitchSurfaceOnEndedState")
             .waitForPlaybackState(Player.STATE_ENDED);
     ActionSchedule waitForEndedAndSwitchSchedule = addSurfaceSwitch(scheduleBuilder).build();
-    new ExoPlayerTestRunner.Builder()
+    new Builder()
         .setTimeline(Timeline.EMPTY)
         .setActionSchedule(waitForEndedAndSwitchSchedule)
         .build()
@@ -1891,7 +1888,7 @@ public final class ExoPlayerTest {
             .play()
             .build();
     ExoPlayerTestRunner testRunner =
-        new ExoPlayerTestRunner.Builder()
+        new Builder()
             .setMediaSource(mediaSource)
             .setActionSchedule(actionSchedule)
             .build()

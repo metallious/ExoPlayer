@@ -15,17 +15,15 @@
  */
 package com.google.android.exoplayer2.source.ads;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
+
 import android.net.Uri;
-
 import com.google.android.exoplayer2.C;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
 
 /** Unit test for {@link AdPlaybackState}. */
 @RunWith(RobolectricTestRunner.class)

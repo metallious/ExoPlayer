@@ -15,15 +15,13 @@
  */
 package com.google.android.exoplayer2.testutil;
 
-import android.util.SparseBooleanArray;
+import static com.google.common.truth.Truth.assertThat;
 
+import android.util.SparseBooleanArray;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.extractor.ExtractorInput;
-
 import java.io.EOFException;
 import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * A fake {@link ExtractorInput} capable of simulating various scenarios.

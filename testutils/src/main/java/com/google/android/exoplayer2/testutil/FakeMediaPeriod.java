@@ -15,9 +15,10 @@
  */
 package com.google.android.exoplayer2.testutil;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import android.os.Handler;
 import android.support.annotation.Nullable;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.SeekParameters;
 import com.google.android.exoplayer2.source.MediaPeriod;
@@ -25,10 +26,7 @@ import com.google.android.exoplayer2.source.SampleStream;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
-
 import java.io.IOException;
-
-import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Fake {@link MediaPeriod} that provides tracks from the given {@link TrackGroupArray}. Selecting
@@ -55,7 +53,7 @@ public class FakeMediaPeriod implements MediaPeriod {
 
   /**
    * @param trackGroupArray The track group array.
-   * @param deferOnPrepared Whether {@link MediaPeriod.Callback#onPrepared(MediaPeriod)} should be
+   * @param deferOnPrepared Whether {@link Callback#onPrepared(MediaPeriod)} should be
    *     called only after {@link #setPreparationComplete()} has been called. If {@code false}
    *     preparation completes immediately.
    */
@@ -128,7 +126,7 @@ public class FakeMediaPeriod implements MediaPeriod {
 
   @Override
   public long selectTracks(TrackSelection[] selections, boolean[] mayRetainStreamFlags,
-                           SampleStream[] streams, boolean[] streamResetFlags, long positionUs) {
+      SampleStream[] streams, boolean[] streamResetFlags, long positionUs) {
     assertThat(prepared).isTrue();
     int rendererCount = selections.length;
     for (int i = 0; i < rendererCount; i++) {

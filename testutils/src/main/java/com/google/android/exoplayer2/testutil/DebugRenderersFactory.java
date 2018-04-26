@@ -20,7 +20,6 @@ import android.content.Context;
 import android.media.MediaCodec;
 import android.media.MediaCrypto;
 import android.os.Handler;
-
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
@@ -33,7 +32,6 @@ import com.google.android.exoplayer2.mediacodec.MediaCodecSelector;
 import com.google.android.exoplayer2.mediacodec.MediaCodecUtil.DecoderQueryException;
 import com.google.android.exoplayer2.video.MediaCodecVideoRenderer;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
-
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -51,9 +49,9 @@ public class DebugRenderersFactory extends DefaultRenderersFactory {
 
   @Override
   protected void buildVideoRenderers(Context context,
-                                     DrmSessionManager<FrameworkMediaCrypto> drmSessionManager, long allowedVideoJoiningTimeMs,
-                                     Handler eventHandler, VideoRendererEventListener eventListener,
-                                     @ExtensionRendererMode int extensionRendererMode, ArrayList<Renderer> out) {
+      DrmSessionManager<FrameworkMediaCrypto> drmSessionManager, long allowedVideoJoiningTimeMs,
+      Handler eventHandler, VideoRendererEventListener eventListener,
+      @ExtensionRendererMode int extensionRendererMode, ArrayList<Renderer> out) {
     out.add(new DebugMediaCodecVideoRenderer(context, MediaCodecSelector.DEFAULT,
         allowedVideoJoiningTimeMs, drmSessionManager, eventHandler, eventListener,
         MAX_DROPPED_VIDEO_FRAME_COUNT_TO_NOTIFY));
@@ -85,7 +83,7 @@ public class DebugRenderersFactory extends DefaultRenderersFactory {
 
     @Override
     protected void configureCodec(MediaCodecInfo codecInfo, MediaCodec codec, Format format,
-                                  MediaCrypto crypto) throws DecoderQueryException {
+        MediaCrypto crypto) throws DecoderQueryException {
       // If the codec is being initialized whilst the renderer is started, default behavior is to
       // render the first frame (i.e. the keyframe before the current position), then drop frames up
       // to the current playback position. For test runs that place a maximum limit on the number of

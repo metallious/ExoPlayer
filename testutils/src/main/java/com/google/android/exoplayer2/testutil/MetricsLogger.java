@@ -82,7 +82,7 @@ public interface MetricsLogger {
      * @param streamName The name of the stream of metrics.
      */
     public static MetricsLogger createDefault(Instrumentation instrumentation, String tag,
-                                              String reportName, String streamName) {
+        String reportName, String streamName) {
       return new LogcatMetricsLogger(tag);
     }
   }
