@@ -15,15 +15,6 @@
  */
 package com.google.android.exoplayer2.audio;
 
-import static com.google.android.exoplayer2.RendererCapabilities.ADAPTIVE_NOT_SEAMLESS;
-import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_HANDLED;
-import static com.google.android.exoplayer2.RendererCapabilities.TUNNELING_NOT_SUPPORTED;
-import static com.google.android.exoplayer2.RendererCapabilities.TUNNELING_SUPPORTED;
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.RendererConfiguration;
@@ -34,6 +25,7 @@ import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.ExoMediaCrypto;
 import com.google.android.exoplayer2.testutil.FakeSampleStream;
 import com.google.android.exoplayer2.util.MimeTypes;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +34,19 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static com.google.android.exoplayer2.RendererCapabilities.ADAPTIVE_NOT_SEAMLESS;
+import static com.google.android.exoplayer2.RendererCapabilities.FORMAT_HANDLED;
+import static com.google.android.exoplayer2.RendererCapabilities.TUNNELING_NOT_SUPPORTED;
+import static com.google.android.exoplayer2.RendererCapabilities.TUNNELING_SUPPORTED;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 /**
  * Unit test for {@link SimpleDecoderAudioRenderer}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public class SimpleDecoderAudioRendererTest {
 
   private static final Format FORMAT = Format.createSampleFormat(null, MimeTypes.AUDIO_RAW, 0);
@@ -90,8 +90,13 @@ public class SimpleDecoderAudioRendererTest {
 
   @Test
   public void testImmediatelyReadEndOfStreamPlaysAudioSinkToEndOfStream() throws Exception {
-    audioRenderer.enable(RendererConfiguration.DEFAULT, new Format[] {FORMAT},
-        new FakeSampleStream(FORMAT), 0, false, 0);
+    audioRenderer.enable(
+        RendererConfiguration.DEFAULT,
+        new Format[] {FORMAT},
+        new FakeSampleStream(FORMAT, false),
+        0,
+        false,
+        0);
     audioRenderer.setCurrentStreamFinal();
     when(mockAudioSink.isEnded()).thenReturn(true);
     while (!audioRenderer.isEnded()) {
@@ -116,7 +121,7 @@ public class SimpleDecoderAudioRendererTest {
 
     @Override
     protected DecoderInputBuffer createInputBuffer() {
-      return new DecoderInputBuffer(DecoderInputBuffer.BUFFER_REPLACEMENT_MODE_DISABLED);
+      return new DecoderInputBuffer(DecoderInputBuffer.BUFFER_REPLACEMENT_MODE_DIRECT);
     }
 
     @Override
@@ -125,8 +130,13 @@ public class SimpleDecoderAudioRendererTest {
     }
 
     @Override
+    protected AudioDecoderException createUnexpectedDecodeException(Throwable error) {
+      return new AudioDecoderException("Unexpected decode error", error);
+    }
+
+    @Override
     protected AudioDecoderException decode(DecoderInputBuffer inputBuffer,
-        SimpleOutputBuffer outputBuffer, boolean reset) {
+                                           SimpleOutputBuffer outputBuffer, boolean reset) {
       if (inputBuffer.isEndOfStream()) {
         outputBuffer.setFlags(C.BUFFER_FLAG_END_OF_STREAM);
       }

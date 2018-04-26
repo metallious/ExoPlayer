@@ -16,10 +16,11 @@
 package com.google.android.exoplayer2.testutil;
 
 import android.os.ConditionVariable;
-import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Surface;
+
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -42,15 +43,18 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.util.Clock;
+import com.google.android.exoplayer2.util.HandlerWrapper;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
-import junit.framework.Assert;
+
+import static com.google.common.truth.Truth.assertWithMessage;
 
 /**
  * A {@link HostedTest} for {@link ExoPlayer} playback tests.
  */
 public abstract class ExoHostedTest extends Player.DefaultEventListener implements HostedTest,
-    AudioRendererEventListener, VideoRendererEventListener {
+        AudioRendererEventListener, VideoRendererEventListener {
 
   static {
     // DefaultAudioSink is able to work around spurious timestamps reported by the platform (by
@@ -72,12 +76,14 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
   private final ConditionVariable testFinished;
 
   private ActionSchedule pendingSchedule;
-  private Handler actionHandler;
+  private HandlerWrapper actionHandler;
   private MappingTrackSelector trackSelector;
   private SimpleExoPlayer player;
   private Surface surface;
   private ExoPlaybackException playerError;
   private Player.EventListener playerEventListener;
+  private VideoRendererEventListener videoDebugListener;
+  private AudioRendererEventListener audioDebugListener;
   private boolean playerWasPrepared;
 
   private boolean playing;
@@ -126,7 +132,7 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
     if (player == null) {
       pendingSchedule = schedule;
     } else {
-      schedule.start(player, trackSelector, surface, actionHandler);
+      schedule.start(player, trackSelector, surface, actionHandler, /* callback= */ null);
     }
   }
 
@@ -137,6 +143,26 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
     this.playerEventListener = eventListener;
     if (player != null) {
       player.addListener(eventListener);
+    }
+  }
+
+  /**
+   * Sets an {@link VideoRendererEventListener} to listen for video debug events during the test.
+   */
+  public final void setVideoDebugListener(VideoRendererEventListener videoDebugListener) {
+    this.videoDebugListener = videoDebugListener;
+    if (player != null) {
+      player.addVideoDebugListener(videoDebugListener);
+    }
+  }
+
+  /**
+   * Sets an {@link AudioRendererEventListener} to listen for audio debug events during the test.
+   */
+  public final void setAudioDebugListener(AudioRendererEventListener audioDebugListener) {
+    this.audioDebugListener = audioDebugListener;
+    if (player != null) {
+      player.addAudioDebugListener(audioDebugListener);
     }
   }
 
@@ -155,14 +181,20 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
     if (playerEventListener != null) {
       player.addListener(playerEventListener);
     }
+    if (videoDebugListener != null) {
+      player.addVideoDebugListener(videoDebugListener);
+    }
+    if (audioDebugListener != null) {
+      player.addAudioDebugListener(audioDebugListener);
+    }
     player.addListener(this);
-    player.setAudioDebugListener(this);
-    player.setVideoDebugListener(this);
+    player.addAudioDebugListener(this);
+    player.addVideoDebugListener(this);
     player.setPlayWhenReady(true);
-    actionHandler = new Handler();
+    actionHandler = Clock.DEFAULT.createHandler(Looper.myLooper(), /* callback= */ null);
     // Schedule any pending actions.
     if (pendingSchedule != null) {
-      pendingSchedule.start(player, trackSelector, surface, actionHandler);
+      pendingSchedule.start(player, trackSelector, surface, actionHandler, /* callback= */ null);
       pendingSchedule = null;
     }
   }
@@ -189,9 +221,12 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
       // Assert that the playback spanned the correct duration of time.
       long minAllowedActualPlayingTimeMs = playingTimeToAssertMs - MAX_PLAYING_TIME_DISCREPANCY_MS;
       long maxAllowedActualPlayingTimeMs = playingTimeToAssertMs + MAX_PLAYING_TIME_DISCREPANCY_MS;
-      Assert.assertTrue("Total playing time: " + totalPlayingTimeMs + ". Expected: "
-          + playingTimeToAssertMs, minAllowedActualPlayingTimeMs <= totalPlayingTimeMs
-          && totalPlayingTimeMs <= maxAllowedActualPlayingTimeMs);
+      assertWithMessage(
+              "Total playing time: " + totalPlayingTimeMs + ". Expected: " + playingTimeToAssertMs)
+          .that(
+              minAllowedActualPlayingTimeMs <= totalPlayingTimeMs
+                  && totalPlayingTimeMs <= maxAllowedActualPlayingTimeMs)
+          .isTrue();
     }
     // Make any additional assertions.
     assertPassed(audioDecoderCounters, videoDecoderCounters);
@@ -326,14 +361,14 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
 
   @SuppressWarnings("unused")
   protected MappingTrackSelector buildTrackSelector(HostActivity host,
-      BandwidthMeter bandwidthMeter) {
+                                                    BandwidthMeter bandwidthMeter) {
     return new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
   }
 
   @SuppressWarnings("unused")
   protected SimpleExoPlayer buildExoPlayer(HostActivity host, Surface surface,
-      MappingTrackSelector trackSelector,
-      DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
+                                           MappingTrackSelector trackSelector,
+                                           DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
     RenderersFactory renderersFactory = new DefaultRenderersFactory(host, drmSessionManager,
         DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF, 0);
     SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector);
@@ -343,7 +378,7 @@ public abstract class ExoHostedTest extends Player.DefaultEventListener implemen
 
   @SuppressWarnings("unused")
   protected abstract MediaSource buildSource(HostActivity host, String userAgent,
-      TransferListener<? super DataSource> mediaTransferListener);
+                                             TransferListener<? super DataSource> mediaTransferListener);
 
   @SuppressWarnings("unused")
   protected void onPlayerErrorInternal(ExoPlaybackException error) {

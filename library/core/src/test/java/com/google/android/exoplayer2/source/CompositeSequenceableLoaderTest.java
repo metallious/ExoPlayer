@@ -15,19 +15,18 @@
  */
 package com.google.android.exoplayer2.source;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.android.exoplayer2.C;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link CompositeSequenceableLoader}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class CompositeSequenceableLoaderTest {
 
   /**
@@ -263,6 +262,11 @@ public final class CompositeSequenceableLoaderTest {
       nextLoadPositionUs += nextChunkDurationUs;
       nextChunkDurationUs = 0;
       return loaded;
+    }
+
+    @Override
+    public void reevaluateBuffer(long positionUs) {
+      // Do nothing.
     }
 
     private void setNextChunkDurationUs(int nextChunkDurationUs) {

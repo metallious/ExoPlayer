@@ -20,20 +20,27 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.FormatHolder;
 import com.google.android.exoplayer2.decoder.DecoderInputBuffer;
 import com.google.android.exoplayer2.source.SampleStream;
+
 import java.io.IOException;
 
 /**
- * Fake {@link SampleStream} that outputs a given {@link Format} then sets the end of stream flag
- * on its input buffer.
+ * Fake {@link SampleStream} that outputs a given {@link Format}, an optional sample containing a
+ * single zero byte, then end of stream.
  */
 public final class FakeSampleStream implements SampleStream {
 
   private final Format format;
 
   private boolean readFormat;
+  private boolean readSample;
 
   public FakeSampleStream(Format format) {
+    this(format, true);
+  }
+
+  public FakeSampleStream(Format format, boolean shouldOutputSample) {
     this.format = format;
+    readSample = !shouldOutputSample;
   }
 
   @Override
@@ -43,11 +50,18 @@ public final class FakeSampleStream implements SampleStream {
 
   @Override
   public int readData(FormatHolder formatHolder, DecoderInputBuffer buffer,
-      boolean formatRequired) {
+                      boolean formatRequired) {
     if (formatRequired || !readFormat) {
       formatHolder.format = format;
       readFormat = true;
       return C.RESULT_FORMAT_READ;
+    } else if (!readSample) {
+      buffer.timeUs = 0;
+      buffer.ensureSpaceForWrite(1);
+      buffer.data.put((byte) 0);
+      buffer.flip();
+      readSample = true;
+      return C.RESULT_BUFFER_READ;
     } else {
       buffer.setFlags(C.BUFFER_FLAG_END_OF_STREAM);
       return C.RESULT_BUFFER_READ;

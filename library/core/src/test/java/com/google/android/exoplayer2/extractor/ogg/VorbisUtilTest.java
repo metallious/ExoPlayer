@@ -15,24 +15,23 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
+import com.google.android.exoplayer2.ParserException;
+import com.google.android.exoplayer2.testutil.OggTestData;
+import com.google.android.exoplayer2.util.ParsableByteArray;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import static com.google.android.exoplayer2.extractor.ogg.VorbisUtil.iLog;
 import static com.google.android.exoplayer2.extractor.ogg.VorbisUtil.verifyVorbisHeaderCapturePattern;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-import com.google.android.exoplayer2.ParserException;
-import com.google.android.exoplayer2.testutil.OggTestData;
-import com.google.android.exoplayer2.util.ParsableByteArray;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 /**
  * Unit test for {@link VorbisUtil}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class VorbisUtilTest {
 
   @Test

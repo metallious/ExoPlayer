@@ -15,20 +15,19 @@
  */
 package com.google.android.exoplayer2.extractor.mp4;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.Util;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests for {@link AtomParsers}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class AtomParsersTest {
 
   private static final String ATOM_HEADER = "000000000000000000000000";

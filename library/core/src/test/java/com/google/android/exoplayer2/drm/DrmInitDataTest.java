@@ -15,28 +15,29 @@
  */
 package com.google.android.exoplayer2.drm;
 
+import android.os.Parcel;
+
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.drm.DrmInitData.SchemeData;
+import com.google.android.exoplayer2.testutil.TestUtil;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.google.android.exoplayer2.C.PLAYREADY_UUID;
 import static com.google.android.exoplayer2.C.UUID_NIL;
 import static com.google.android.exoplayer2.C.WIDEVINE_UUID;
 import static com.google.android.exoplayer2.util.MimeTypes.VIDEO_MP4;
 import static com.google.common.truth.Truth.assertThat;
 
-import android.os.Parcel;
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.drm.DrmInitData.SchemeData;
-import com.google.android.exoplayer2.testutil.TestUtil;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 /**
  * Unit test for {@link DrmInitData}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public class DrmInitDataTest {
 
   private static final SchemeData DATA_1 = new SchemeData(WIDEVINE_UUID, VIDEO_MP4,

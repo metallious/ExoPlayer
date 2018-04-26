@@ -15,26 +15,26 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import com.google.android.exoplayer2.extractor.ExtractorInput;
 import com.google.android.exoplayer2.testutil.FakeExtractorInput;
 import com.google.android.exoplayer2.testutil.OggTestData;
 import com.google.android.exoplayer2.testutil.TestUtil;
-import java.io.EOFException;
-import java.io.IOException;
-import java.util.Random;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.util.Random;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit test for {@link DefaultOggSeeker} utility methods.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class DefaultOggSeekerUtilMethodsTest {
 
   private final Random random = new Random(0);
@@ -158,7 +158,7 @@ public final class DefaultOggSeekerUtilMethodsTest {
   }
 
   private void skipToPageOfGranule(ExtractorInput input, long granule,
-      long elapsedSamplesExpected) throws IOException, InterruptedException {
+                                   long elapsedSamplesExpected) throws IOException, InterruptedException {
     DefaultOggSeeker oggSeeker = new DefaultOggSeeker(0, input.getLength(), new FlacReader(), 1, 2);
     while (true) {
       try {

@@ -15,9 +15,6 @@
  */
 package com.google.android.exoplayer2.trackselection;
 
-import static com.google.android.exoplayer2.RendererConfiguration.DEFAULT;
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
@@ -26,17 +23,20 @@ import com.google.android.exoplayer2.RendererConfiguration;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.util.MimeTypes;
-import java.util.Arrays;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.util.Arrays;
+
+import static com.google.android.exoplayer2.RendererConfiguration.DEFAULT;
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit tests for {@link MappingTrackSelector}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class MappingTrackSelectorTest {
 
   private static final RendererCapabilities VIDEO_CAPABILITIES =
@@ -312,7 +312,7 @@ public final class MappingTrackSelectorTest {
 
     @Override
     protected TrackSelection[] selectTracks(RendererCapabilities[] rendererCapabilities,
-        TrackGroupArray[] rendererTrackGroupArrays, int[][][] rendererFormatSupports)
+                                            TrackGroupArray[] rendererTrackGroupArrays, int[][][] rendererFormatSupports)
         throws ExoPlaybackException {
       lastRendererTrackGroupArrays = rendererTrackGroupArrays;
       TrackSelection[] trackSelectionResult = new TrackSelection[rendererCapabilities.length];

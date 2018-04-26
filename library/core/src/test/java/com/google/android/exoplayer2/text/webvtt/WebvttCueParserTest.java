@@ -15,25 +15,25 @@
  */
 package com.google.android.exoplayer2.text.webvtt;
 
-import static android.graphics.Typeface.BOLD;
-import static android.graphics.Typeface.ITALIC;
-import static com.google.common.truth.Truth.assertThat;
-
 import android.graphics.Typeface;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import java.util.Collections;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.util.Collections;
+
+import static android.graphics.Typeface.BOLD;
+import static android.graphics.Typeface.ITALIC;
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link WebvttCueParser}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class WebvttCueParserTest {
 
   @Test

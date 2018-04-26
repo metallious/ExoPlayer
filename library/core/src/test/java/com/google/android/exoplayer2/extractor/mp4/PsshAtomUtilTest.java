@@ -15,25 +15,25 @@
  */
 package com.google.android.exoplayer2.extractor.mp4;
 
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.util.ParsableByteArray;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.util.UUID;
+
 import static com.google.android.exoplayer2.C.WIDEVINE_UUID;
 import static com.google.android.exoplayer2.extractor.mp4.Atom.TYPE_pssh;
 import static com.google.android.exoplayer2.extractor.mp4.Atom.parseFullAtomFlags;
 import static com.google.android.exoplayer2.extractor.mp4.Atom.parseFullAtomVersion;
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.util.ParsableByteArray;
-import java.util.UUID;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 /**
  * Tests for {@link PsshAtomUtil}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class PsshAtomUtilTest {
 
   @Test

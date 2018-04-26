@@ -15,14 +15,6 @@
  */
 package com.google.android.exoplayer2.source;
 
-import static com.google.android.exoplayer2.C.RESULT_BUFFER_READ;
-import static com.google.android.exoplayer2.C.RESULT_FORMAT_READ;
-import static com.google.android.exoplayer2.C.RESULT_NOTHING_READ;
-import static com.google.android.exoplayer2.source.SampleQueue.ADVANCE_FAILED;
-import static com.google.common.truth.Truth.assertThat;
-import static java.lang.Long.MIN_VALUE;
-import static java.util.Arrays.copyOfRange;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.FormatHolder;
@@ -31,18 +23,25 @@ import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.util.ParsableByteArray;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import static com.google.android.exoplayer2.C.RESULT_BUFFER_READ;
+import static com.google.android.exoplayer2.C.RESULT_FORMAT_READ;
+import static com.google.android.exoplayer2.C.RESULT_NOTHING_READ;
+import static com.google.android.exoplayer2.source.SampleQueue.ADVANCE_FAILED;
+import static com.google.common.truth.Truth.assertThat;
+import static java.lang.Long.MIN_VALUE;
+import static java.util.Arrays.copyOfRange;
 
 /**
  * Test for {@link SampleQueue}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class SampleQueueTest {
 
   private static final int ALLOCATION_SIZE = 16;
@@ -215,12 +214,14 @@ public final class SampleQueueTest {
   public void testReadMultiWithRewind() {
     writeTestData();
     assertReadTestData();
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(0);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertAllocationCount(10);
     // Rewind.
     sampleQueue.rewind();
     assertAllocationCount(10);
     // Read again.
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(0);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(0);
     assertReadTestData();
   }
@@ -230,11 +231,14 @@ public final class SampleQueueTest {
     writeTestData();
     assertReadTestData();
     sampleQueue.discardToRead();
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(8);
+    assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertAllocationCount(0);
     // Rewind.
     sampleQueue.rewind();
     assertAllocationCount(0);
     // Can't read again.
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(8);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertReadEndOfStream(false);
   }
@@ -332,6 +336,7 @@ public final class SampleQueueTest {
     writeTestData();
     // Should discard everything.
     sampleQueue.discardToEnd();
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(8);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertAllocationCount(0);
     // We should still be able to read the upstream format.
@@ -346,28 +351,39 @@ public final class SampleQueueTest {
     writeTestData();
     // Shouldn't discard anything.
     sampleQueue.discardTo(LAST_SAMPLE_TIMESTAMP, false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(0);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(0);
     assertAllocationCount(10);
     // Read the first sample.
     assertReadTestData(null, 0, 1);
     // Shouldn't discard anything.
     sampleQueue.discardTo(TEST_SAMPLE_TIMESTAMPS[1] - 1, false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(0);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(1);
     assertAllocationCount(10);
     // Should discard the read sample.
     sampleQueue.discardTo(TEST_SAMPLE_TIMESTAMPS[1], false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(1);
+    assertThat(sampleQueue.getReadIndex()).isEqualTo(1);
     assertAllocationCount(9);
     // Shouldn't discard anything.
     sampleQueue.discardTo(LAST_SAMPLE_TIMESTAMP, false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(1);
+    assertThat(sampleQueue.getReadIndex()).isEqualTo(1);
     assertAllocationCount(9);
     // Should be able to read the remaining samples.
     assertReadTestData(TEST_FORMAT_1, 1, 7);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(1);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     // Should discard up to the second last sample
     sampleQueue.discardTo(LAST_SAMPLE_TIMESTAMP - 1, false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(6);
+    assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertAllocationCount(3);
     // Should discard up the last sample
     sampleQueue.discardTo(LAST_SAMPLE_TIMESTAMP, false, true);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(7);
+    assertThat(sampleQueue.getReadIndex()).isEqualTo(8);
     assertAllocationCount(1);
   }
 
@@ -376,10 +392,12 @@ public final class SampleQueueTest {
     writeTestData();
     // Shouldn't discard anything.
     sampleQueue.discardTo(TEST_SAMPLE_TIMESTAMPS[1] - 1, false, false);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(0);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(0);
     assertAllocationCount(10);
     // Should discard the first sample.
     sampleQueue.discardTo(TEST_SAMPLE_TIMESTAMPS[1], false, false);
+    assertThat(sampleQueue.getFirstIndex()).isEqualTo(1);
     assertThat(sampleQueue.getReadIndex()).isEqualTo(1);
     assertAllocationCount(9);
     // Should be able to read the remaining samples.
@@ -512,7 +530,7 @@ public final class SampleQueueTest {
    */
   @SuppressWarnings("ReferenceEquality")
   private void writeTestData(byte[] data, int[] sampleSizes, int[] sampleOffsets,
-      long[] sampleTimestamps, Format[] sampleFormats, int[] sampleFlags) {
+                             long[] sampleTimestamps, Format[] sampleFormats, int[] sampleFlags) {
     sampleQueue.sampleData(new ParsableByteArray(data), data.length);
     Format format = null;
     for (int i = 0; i < sampleTimestamps.length; i++) {

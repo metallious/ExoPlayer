@@ -15,21 +15,10 @@
  */
 package com.google.android.exoplayer2.upstream.cache;
 
-import static com.google.android.exoplayer2.C.LENGTH_UNSET;
-import static com.google.android.exoplayer2.util.Util.toByteArray;
-import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.doAnswer;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.upstream.cache.Cache.CacheException;
 import com.google.android.exoplayer2.util.Util;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.NavigableSet;
-import java.util.Random;
-import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,13 +30,24 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.NavigableSet;
+import java.util.Random;
+import java.util.Set;
+
+import static com.google.android.exoplayer2.C.LENGTH_UNSET;
+import static com.google.android.exoplayer2.util.Util.toByteArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.doAnswer;
 
 /**
  * Unit tests for {@link SimpleCache}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public class SimpleCacheTest {
 
   private static final String KEY_1 = "key1";
@@ -75,20 +75,17 @@ public class SimpleCacheTest {
 
     assertThat(simpleCache.startReadWriteNonBlocking(KEY_1, 0)).isNull();
 
-    assertThat(simpleCache.getKeys()).isEmpty();
     NavigableSet<CacheSpan> cachedSpans = simpleCache.getCachedSpans(KEY_1);
-    assertThat(cachedSpans == null || cachedSpans.isEmpty()).isTrue();
+    assertThat(cachedSpans.isEmpty()).isTrue();
     assertThat(simpleCache.getCacheSpace()).isEqualTo(0);
     assertThat(cacheDir.listFiles()).hasLength(0);
 
     addCache(simpleCache, KEY_1, 0, 15);
 
     Set<String> cachedKeys = simpleCache.getKeys();
-    assertThat(cachedKeys).hasSize(1);
-    assertThat(cachedKeys.contains(KEY_1)).isTrue();
+    assertThat(cachedKeys).containsExactly(KEY_1);
     cachedSpans = simpleCache.getCachedSpans(KEY_1);
-    assertThat(cachedSpans).hasSize(1);
-    assertThat(cachedSpans.contains(cacheSpan1)).isTrue();
+    assertThat(cachedSpans).contains(cacheSpan1);
     assertThat(simpleCache.getCacheSpace()).isEqualTo(15);
 
     simpleCache.releaseHoleSpan(cacheSpan1);
@@ -217,41 +214,6 @@ public class SimpleCacheTest {
     assertThat(cacheDir.listFiles()).hasLength(0);
   }
 
-  @Test
-  public void testGetCachedBytes() throws Exception {
-    SimpleCache simpleCache = getSimpleCache();
-    CacheSpan cacheSpan = simpleCache.startReadWrite(KEY_1, 0);
-
-    // No cached bytes, returns -'length'
-    assertThat(simpleCache.getCachedBytes(KEY_1, 0, 100)).isEqualTo(-100);
-
-    // Position value doesn't affect the return value
-    assertThat(simpleCache.getCachedBytes(KEY_1, 20, 100)).isEqualTo(-100);
-
-    addCache(simpleCache, KEY_1, 0, 15);
-
-    // Returns the length of a single span
-    assertThat(simpleCache.getCachedBytes(KEY_1, 0, 100)).isEqualTo(15);
-
-    // Value is capped by the 'length'
-    assertThat(simpleCache.getCachedBytes(KEY_1, 0, 10)).isEqualTo(10);
-
-    addCache(simpleCache, KEY_1, 15, 35);
-
-    // Returns the length of two adjacent spans
-    assertThat(simpleCache.getCachedBytes(KEY_1, 0, 100)).isEqualTo(50);
-
-    addCache(simpleCache, KEY_1, 60, 10);
-
-    // Not adjacent span doesn't affect return value
-    assertThat(simpleCache.getCachedBytes(KEY_1, 0, 100)).isEqualTo(50);
-
-    // Returns length of hole up to the next cached span
-    assertThat(simpleCache.getCachedBytes(KEY_1, 55, 100)).isEqualTo(-5);
-
-    simpleCache.releaseHoleSpan(cacheSpan);
-  }
-
   /* Tests https://github.com/google/ExoPlayer/issues/3260 case. */
   @Test
   public void testExceptionDuringEvictionByLeastRecentlyUsedCacheEvictorNotHang() throws Exception {
@@ -283,7 +245,7 @@ public class SimpleCacheTest {
 
     // Although store() has failed, it should remove the first span and add the new one.
     NavigableSet<CacheSpan> cachedSpans = simpleCache.getCachedSpans(KEY_1);
-    assertThat(cachedSpans).isNotNull();
+    assertThat(cachedSpans).isNotEmpty();
     assertThat(cachedSpans).hasSize(1);
     assertThat(cachedSpans.pollFirst().position).isEqualTo(15);
   }

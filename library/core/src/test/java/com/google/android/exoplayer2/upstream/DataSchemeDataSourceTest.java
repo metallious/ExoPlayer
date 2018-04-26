@@ -15,25 +15,26 @@
  */
 package com.google.android.exoplayer2.upstream;
 
-import static com.google.android.exoplayer2.C.RESULT_END_OF_INPUT;
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.fail;
-
 import android.net.Uri;
+
 import com.google.android.exoplayer2.C;
-import java.io.IOException;
-import java.nio.charset.Charset;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+
+import static com.google.android.exoplayer2.C.RESULT_END_OF_INPUT;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * Unit tests for {@link DataSchemeDataSource}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class DataSchemeDataSourceTest {
 
   private DataSource schemeDataDataSource;

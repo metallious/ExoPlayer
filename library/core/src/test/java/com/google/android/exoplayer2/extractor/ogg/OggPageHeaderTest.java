@@ -15,23 +15,23 @@
  */
 package com.google.android.exoplayer2.extractor.ogg;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.android.exoplayer2.testutil.FakeExtractorInput;
 import com.google.android.exoplayer2.testutil.FakeExtractorInput.SimulatedIOException;
 import com.google.android.exoplayer2.testutil.OggTestData;
 import com.google.android.exoplayer2.testutil.TestUtil;
-import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.io.IOException;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link OggPageHeader}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class OggPageHeaderTest {
 
   @Test
@@ -91,7 +91,7 @@ public final class OggPageHeaderTest {
   }
 
   private boolean populatePageHeader(FakeExtractorInput input, OggPageHeader header,
-      boolean quite) throws IOException, InterruptedException {
+                                     boolean quite) throws IOException, InterruptedException {
     while (true) {
       try {
         return header.populate(input, quite);

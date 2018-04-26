@@ -15,15 +15,11 @@
  */
 package com.google.android.exoplayer2;
 
-import static com.google.android.exoplayer2.C.WIDEVINE_UUID;
-import static com.google.android.exoplayer2.util.MimeTypes.VIDEO_MP4;
-import static com.google.android.exoplayer2.util.MimeTypes.VIDEO_WEBM;
-import static com.google.common.truth.Truth.assertThat;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.media.MediaFormat;
 import android.os.Parcel;
+
 import com.google.android.exoplayer2.drm.DrmInitData;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.id3.TextInformationFrame;
@@ -31,21 +27,26 @@ import com.google.android.exoplayer2.testutil.TestUtil;
 import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.ColorInfo;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import static com.google.android.exoplayer2.C.WIDEVINE_UUID;
+import static com.google.android.exoplayer2.util.MimeTypes.VIDEO_MP4;
+import static com.google.android.exoplayer2.util.MimeTypes.VIDEO_WEBM;
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Unit test for {@link Format}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class FormatTest {
 
   private static final List<byte[]> INIT_DATA;

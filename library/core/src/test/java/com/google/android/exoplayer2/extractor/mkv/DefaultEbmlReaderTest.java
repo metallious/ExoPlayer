@@ -15,25 +15,25 @@
  */
 package com.google.android.exoplayer2.extractor.mkv;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.android.exoplayer2.extractor.ExtractorInput;
 import com.google.android.exoplayer2.testutil.FakeExtractorInput;
 import com.google.android.exoplayer2.testutil.TestUtil;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests {@link DefaultEbmlReader}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public class DefaultEbmlReaderTest {
 
   @Test
@@ -142,10 +142,7 @@ public class DefaultEbmlReaderTest {
     // Check that we really did get to the end of input.
     assertThat(input.readFully(new byte[1], 0, 1, true)).isFalse();
 
-    assertThat(output.events).hasSize(expectedEvents.size());
-    for (int i = 0; i < expectedEvents.size(); i++) {
-      assertThat(output.events.get(i)).isEqualTo(expectedEvents.get(i));
-    }
+    assertThat(output.events).containsExactlyElementsIn(expectedEvents).inOrder();
   }
 
   /**

@@ -15,6 +15,29 @@
  */
 package com.google.android.exoplayer2.upstream.cache;
 
+import android.net.Uri;
+
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.testutil.FakeDataSet;
+import com.google.android.exoplayer2.testutil.FakeDataSource;
+import com.google.android.exoplayer2.testutil.TestUtil;
+import com.google.android.exoplayer2.upstream.DataSpec;
+import com.google.android.exoplayer2.upstream.cache.CacheUtil.CachingCounters;
+import com.google.android.exoplayer2.util.Util;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+
+import java.io.EOFException;
+import java.io.File;
+
 import static android.net.Uri.EMPTY;
 import static android.net.Uri.parse;
 import static com.google.android.exoplayer2.C.LENGTH_UNSET;
@@ -25,32 +48,10 @@ import static com.google.android.exoplayer2.upstream.cache.CacheUtil.getKey;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-import android.net.Uri;
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.testutil.FakeDataSet;
-import com.google.android.exoplayer2.testutil.FakeDataSource;
-import com.google.android.exoplayer2.testutil.TestUtil;
-import com.google.android.exoplayer2.upstream.DataSpec;
-import com.google.android.exoplayer2.upstream.cache.CacheUtil.CachingCounters;
-import com.google.android.exoplayer2.util.Util;
-import java.io.EOFException;
-import java.io.File;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-
 /**
  * Tests {@link CacheUtil}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class CacheUtilTest {
 
   /**
@@ -69,19 +70,6 @@ public final class CacheUtilTest {
     private void init() {
       spansAndGaps = new int[] {};
       contentLength = C.LENGTH_UNSET;
-    }
-
-    @Override
-    public long getCachedBytes(String key, long position, long length) {
-      for (int i = 0; i < spansAndGaps.length; i++) {
-        int spanOrGap = spansAndGaps[i];
-        if (position < spanOrGap) {
-          long left = Math.min(spanOrGap - position, length);
-          return (i & 1) == 1 ? -left : left;
-        }
-        position -= spanOrGap;
-      }
-      return -length;
     }
 
     @Override
@@ -310,7 +298,7 @@ public final class CacheUtilTest {
   }
 
   private static void assertCounters(CachingCounters counters, int alreadyCachedBytes,
-      int newlyCachedBytes, int contentLength) {
+                                     int newlyCachedBytes, int contentLength) {
     assertThat(counters.alreadyCachedBytes).isEqualTo(alreadyCachedBytes);
     assertThat(counters.newlyCachedBytes).isEqualTo(newlyCachedBytes);
     assertThat(counters.contentLength).isEqualTo(contentLength);

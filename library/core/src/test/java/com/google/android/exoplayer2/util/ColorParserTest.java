@@ -15,6 +15,12 @@
  */
 package com.google.android.exoplayer2.util;
 
+import android.graphics.Color;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.WHITE;
@@ -23,17 +29,10 @@ import static android.graphics.Color.parseColor;
 import static com.google.android.exoplayer2.util.ColorParser.parseTtmlColor;
 import static com.google.common.truth.Truth.assertThat;
 
-import android.graphics.Color;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 /**
  * Unit test for <code>ColorParser</code>.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class ColorParserTest {
 
   // Negative tests.

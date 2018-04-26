@@ -15,27 +15,27 @@
  */
 package com.google.android.exoplayer2.extractor.mkv;
 
+import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.extractor.ExtractorInput;
+import com.google.android.exoplayer2.testutil.FakeExtractorInput;
+import com.google.android.exoplayer2.testutil.FakeExtractorInput.SimulatedIOException;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+
+import java.io.EOFException;
+import java.io.IOException;
+
 import static com.google.android.exoplayer2.C.RESULT_END_OF_INPUT;
 import static com.google.android.exoplayer2.C.RESULT_MAX_LENGTH_EXCEEDED;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
 
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.extractor.ExtractorInput;
-import com.google.android.exoplayer2.testutil.FakeExtractorInput;
-import com.google.android.exoplayer2.testutil.FakeExtractorInput.SimulatedIOException;
-import java.io.EOFException;
-import java.io.IOException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-
 /**
  * Tests for {@link VarintReader}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class VarintReaderTest {
 
   private static final byte MAX_BYTE = (byte) 0xFF;
@@ -193,7 +193,7 @@ public final class VarintReaderTest {
   }
 
   private static void testReadVarint(VarintReader reader, boolean removeMask, byte[] data,
-      int expectedLength, long expectedValue) throws IOException, InterruptedException {
+                                     int expectedLength, long expectedValue) throws IOException, InterruptedException {
     ExtractorInput input = new FakeExtractorInput.Builder()
         .setData(data)
         .setSimulateUnknownLength(true)
@@ -204,7 +204,7 @@ public final class VarintReaderTest {
   }
 
   private static void testReadVarintFlaky(VarintReader reader, boolean removeMask, byte[] data,
-      int expectedLength, long expectedValue) throws IOException, InterruptedException {
+                                          int expectedLength, long expectedValue) throws IOException, InterruptedException {
     ExtractorInput input = new FakeExtractorInput.Builder()
         .setData(data)
         .setSimulateUnknownLength(true)

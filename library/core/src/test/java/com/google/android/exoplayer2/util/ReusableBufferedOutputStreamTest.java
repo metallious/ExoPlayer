@@ -15,19 +15,18 @@
  */
 package com.google.android.exoplayer2.util;
 
-import static com.google.common.truth.Truth.assertThat;
-
-import java.io.ByteArrayOutputStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+
+import java.io.ByteArrayOutputStream;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests {@link ReusableBufferedOutputStream}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class ReusableBufferedOutputStreamTest {
 
   private static final byte[] TEST_DATA_1 = "test data 1".getBytes();
