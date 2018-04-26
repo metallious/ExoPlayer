@@ -29,13 +29,11 @@ import java.io.IOException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 /**
  * Unit test for {@link VorbisReader}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = Config.TARGET_SDK, manifest = Config.NONE)
 public final class VorbisReaderTest {
 
   @Test
@@ -65,7 +63,7 @@ public final class VorbisReaderTest {
         .setSimulateUnknownLength(true).setSimulatePartialReads(true).build();
 
     VorbisReader reader = new VorbisReader();
-    VorbisReader.VorbisSetup vorbisSetup = readSetupHeaders(reader, input);
+    VorbisSetup vorbisSetup = readSetupHeaders(reader, input);
 
     assertThat(vorbisSetup.idHeader).isNotNull();
     assertThat(vorbisSetup.commentHeader).isNotNull();
